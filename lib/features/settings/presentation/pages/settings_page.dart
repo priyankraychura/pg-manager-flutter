@@ -72,6 +72,15 @@ class SettingsPage extends ConsumerWidget {
                 animate: false,
               ),
               GlassCard.info(
+                icon: Icons.privacy_tip_outlined,
+                title: 'Privacy Policy',
+                subtitle: 'Read our privacy policy',
+                iconColor: AppColors.primaryOrange,
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () => context.push('/privacy-policy'),
+                animate: false,
+              ),
+              GlassCard.info(
                 icon: Icons.info_outline,
                 title: 'About',
                 subtitle: 'PG Manager v1.0.0',
