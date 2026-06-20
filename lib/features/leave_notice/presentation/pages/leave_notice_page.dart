@@ -327,6 +327,7 @@ class _ExistingNotice extends StatelessWidget {
                   icon: Icons.event_available_rounded,
                   isDark: isDark,
                   isHighlighted: true,
+                  customIconColor: Colors.blueAccent,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Divider(height: 1, color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1)),
@@ -337,6 +338,7 @@ class _ExistingNotice extends StatelessWidget {
                   value: Formatters.date(notice.submittedDate),
                   icon: Icons.history_rounded,
                   isDark: isDark,
+                  customIconColor: Colors.orangeAccent,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Divider(height: 1, color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1)),
@@ -348,6 +350,7 @@ class _ExistingNotice extends StatelessWidget {
                   icon: Icons.subject_rounded,
                   isDark: isDark,
                   isMultiline: true,
+                  customIconColor: Colors.purpleAccent,
                 ),
               ],
             ),
@@ -365,20 +368,23 @@ class _ExistingNotice extends StatelessWidget {
     required bool isDark,
     bool isHighlighted = false,
     bool isMultiline = false,
+    Color? customIconColor,
   }) {
+    final effectiveIconColor = customIconColor ?? (isHighlighted ? AppColors.accentTeal : (isDark ? Colors.white70 : Colors.black54));
+
     return Row(
       crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.05),
+            color: effectiveIconColor.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
             icon, 
             size: 20, 
-            color: isHighlighted ? AppColors.accentTeal : (isDark ? Colors.white70 : Colors.black54),
+            color: effectiveIconColor,
           ),
         ),
         const SizedBox(width: AppSpacing.md),
