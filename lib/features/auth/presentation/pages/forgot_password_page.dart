@@ -73,17 +73,11 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   alignment: Alignment.centerLeft,
                   child: GestureDetector(
                     onTap: () => context.pop(),
-                    child: Container(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      decoration: BoxDecoration(
-                        color: (isDark ? Colors.white : Colors.black)
-                            .withValues(alpha: 0.08),
-                        borderRadius:
-                            BorderRadius.circular(AppSpacing.radiusMd),
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                       child: Icon(
                         Icons.arrow_back_ios_rounded,
-                        size: 18,
+                        size: 20,
                         color: isDark
                             ? AppColors.darkTextPrimary
                             : AppColors.lightTextPrimary,

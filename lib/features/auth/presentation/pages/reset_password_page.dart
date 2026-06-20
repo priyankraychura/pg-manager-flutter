@@ -77,6 +77,26 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
               children: [
                 const SizedBox(height: 10),
 
+                // Back button
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: () => context.go('/login'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                      child: Icon(
+                        Icons.arrow_back_ios_rounded,
+                        size: 20,
+                        color: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.lightTextPrimary,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
                 // Lock Icon
                 Align(
                   alignment: Alignment.centerLeft,
