@@ -12,7 +12,7 @@ class GradientBackground extends StatefulWidget {
   const GradientBackground({
     super.key,
     required this.child,
-    this.animate = true,
+    this.animate = false, // Static by default to maximize performance and avoid BackdropFilter lag
   });
 
   @override
@@ -69,6 +69,14 @@ class _GradientBackgroundState extends State<GradientBackground>
                   ),
                 );
               },
+            )
+          else
+            CustomPaint(
+              size: size,
+              painter: _OrbsPainter(
+                progress: 0.0, // Static paint, cached by Flutter
+                isDark: isDark,
+              ),
             ),
           // Main content
           widget.child,

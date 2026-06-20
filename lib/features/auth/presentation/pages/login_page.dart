@@ -223,23 +223,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         // App Icon
         Container(
-          width: 80,
-          height: 80,
+          width: 84,
+          height: 84,
           decoration: BoxDecoration(
             gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(24), // Squircle-like smooth radius
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryPurple.withValues(alpha: 0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
+                color: AppColors.primaryPurple.withValues(alpha: 0.25),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
           child: const Icon(
-            Icons.home_rounded,
+            Icons.apartment_rounded, // Premium building logo
             color: Colors.white,
-            size: 40,
+            size: 42,
           ),
         )
             .animate()

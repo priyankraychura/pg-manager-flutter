@@ -49,33 +49,38 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white.withValues(alpha: 0.5),
+      fillColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.lg,
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-        borderSide: BorderSide(
-          color: Colors.white.withValues(alpha: 0.6),
+        borderSide: const BorderSide(
+          color: Color(0xFFCBD5E1), // Crisp slate border
+          width: 1.0,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-        borderSide: BorderSide(
-          color: Colors.white.withValues(alpha: 0.6),
+        borderSide: const BorderSide(
+          color: Color(0xFFE2E8F0), // Subtle slate border
+          width: 1.0,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         borderSide: const BorderSide(
-          color: AppColors.primaryPurple,
+          color: AppColors.primaryPurple, // Executive Indigo
           width: 1.5,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-        borderSide: const BorderSide(color: AppColors.error),
+        borderSide: const BorderSide(
+          color: AppColors.error,
+          width: 1.0,
+        ),
       ),
       hintStyle: TextStyle(
         color: AppColors.lightTextTertiary,
@@ -160,7 +165,7 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white.withValues(alpha: 0.06),
+      fillColor: Colors.white.withValues(alpha: 0.03),
       contentPadding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.lg,
@@ -168,13 +173,15 @@ class AppTheme {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         borderSide: BorderSide(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.08),
+          width: 1.0,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         borderSide: BorderSide(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.08),
+          width: 1.0,
         ),
       ),
       focusedBorder: OutlineInputBorder(
@@ -186,7 +193,10 @@ class AppTheme {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-        borderSide: const BorderSide(color: AppColors.error),
+        borderSide: const BorderSide(
+          color: AppColors.error,
+          width: 1.0,
+        ),
       ),
       hintStyle: TextStyle(
         color: AppColors.darkTextTertiary,
