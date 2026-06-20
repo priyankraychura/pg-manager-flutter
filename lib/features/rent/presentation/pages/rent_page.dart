@@ -289,9 +289,48 @@ class _PaymentTile extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            Formatters.currency(payment.amount),
-            style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w700),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                Formatters.currency(payment.amount),
+                style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w700),
+              ),
+              if (payment.status == RentStatus.paid) ...[
+                const SizedBox(height: AppSpacing.xs),
+                GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Downloading invoice...'),
+                        backgroundColor: AppColors.success,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.download_rounded,
+                        size: 14,
+                        color: AppColors.primaryOrange,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Invoice',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.primaryOrange,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),

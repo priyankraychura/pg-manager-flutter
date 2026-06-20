@@ -86,7 +86,7 @@ class RoomDetailsPage extends ConsumerWidget {
                                     child: Image.network(
                                       room.roomImageUrl!,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) => _buildRoomInitials(room.roomNumber),
+                                      errorBuilder: (_, _, _) => _buildRoomInitials(room.roomNumber),
                                     ),
                                   )
                                 : _buildRoomInitials(room.roomNumber),
@@ -229,7 +229,7 @@ class RoomDetailsPage extends ConsumerWidget {
                                     child: Image.network(
                                       r.profileImageUrl!,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) => _buildInitialsAvatar(r.name),
+                                      errorBuilder: (_, _, _) => _buildInitialsAvatar(r.name),
                                     ),
                                   )
                                 : _buildInitialsAvatar(r.name),
