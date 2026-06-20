@@ -75,7 +75,7 @@ class GlassCard extends ConsumerWidget {
               ],
             ),
           ),
-          if (trailing != null) trailing,
+          ?trailing,
         ],
       ),
     );

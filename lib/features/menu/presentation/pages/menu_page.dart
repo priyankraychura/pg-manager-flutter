@@ -43,7 +43,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           title: 'Meal Menu',
           subtitle: 'Loading Menu...',
         ),
-        body: const GradientBackground(
+        body: GradientBackground(
           child: CommonLoader(),
         ),
       ),

@@ -14,6 +14,7 @@ import '../../features/notices/presentation/pages/notices_page.dart';
 import '../../features/room/presentation/pages/room_details_page.dart';
 import '../../features/leave_notice/presentation/pages/leave_notice_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
+import '../../features/settings/presentation/pages/help_support_page.dart';
 import '../../features/navigation/navigation_shell.dart';
 
 /// App router configuration using GoRouter.
@@ -118,6 +119,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/settings',
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: '/help-support',
+      builder: (context, state) => const HelpAndSupportPage(),
     ),
   ],
 );

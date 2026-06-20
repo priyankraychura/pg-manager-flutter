@@ -68,6 +68,7 @@ class SettingsPage extends ConsumerWidget {
                 subtitle: 'FAQ and contact admin',
                 iconColor: AppColors.info,
                 trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () => context.push('/help-support'),
                 animate: false,
               ),
               GlassCard.info(
