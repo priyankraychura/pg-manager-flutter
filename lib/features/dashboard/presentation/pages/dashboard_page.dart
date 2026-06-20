@@ -147,10 +147,10 @@ class DashboardPage extends ConsumerWidget {
                       SectionHeader(
                         title: "Today's Menu",
                         actionLabel: 'Full Menu',
-                        onAction: () => context.go('/menu'),
+                        onAction: () => context.push('/menu'),
                       ),
                       GlassCard(
-                        onTap: () => context.go('/menu'),
+                        onTap: () => context.push('/menu'),
                         child: Column(
                           children: [
                             _MealRow(
