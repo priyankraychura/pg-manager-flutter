@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/meal_entity.dart';
@@ -34,8 +35,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
     final menuAsync = ref.watch(menuProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return SafeArea(
-      child: menuAsync.when(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: const GlassAppBar(
+        title: 'Meal Menu',
+      ),
+      body: menuAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (meals) {
@@ -50,8 +55,6 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Meal Menu', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
-                      const SizedBox(height: 4),
                       Text('2-Week Rotating Menu • Week $currentWeek', style: AppTextStyles.body.copyWith(color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary)),
                     ],
                   ),

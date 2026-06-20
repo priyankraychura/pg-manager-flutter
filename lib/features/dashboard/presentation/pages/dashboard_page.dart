@@ -74,31 +74,30 @@ class DashboardPage extends ConsumerWidget {
                     ),
                     GestureDetector(
                       onTap: () => context.push('/profile'),
-                      child:
-                          Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              gradient: AppColors.primaryGradient,
-                              borderRadius: BorderRadius.circular(
-                                AppSpacing.radiusLg,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                (authState.user?.name ?? data.tenantName)
-                                    .substring(0, 1)
-                                    .toUpperCase(),
-                                style: AppTextStyles.h2.copyWith(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ).animate().scale(
-                            delay: 200.ms,
-                            duration: 400.ms,
-                            curve: Curves.elasticOut,
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: AppColors.primaryGradient,
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radiusLg,
                           ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            (authState.user?.name ?? data.tenantName)
+                                .substring(0, 1)
+                                .toUpperCase(),
+                            style: AppTextStyles.h2.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ).animate().scale(
+                        delay: 200.ms,
+                        duration: 400.ms,
+                        curve: Curves.elasticOut,
+                      ),
                     ),
                   ],
                 ),

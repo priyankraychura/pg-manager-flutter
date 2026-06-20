@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/formatters.dart';
+import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_button.dart';
 import '../../../../core/widgets/glass_container.dart';
@@ -30,23 +31,13 @@ class RentPage extends ConsumerWidget {
     final historyAsync = ref.watch(paymentHistoryProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return SafeArea(
-      child: CustomScrollView(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: const GlassAppBar(
+        title: 'Rent & Payments',
+      ),
+      body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                AppSpacing.screenPadding,
-                AppSpacing.lg,
-                AppSpacing.screenPadding,
-                0,
-              ),
-              child: Text(
-                'Rent & Payments',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.screenPadding),

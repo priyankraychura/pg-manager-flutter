@@ -28,7 +28,7 @@ class ProfilePage extends ConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: AppSpacing.lg),
-
+            
             // Avatar
             Container(
               width: AppSpacing.avatarXl, height: AppSpacing.avatarXl,

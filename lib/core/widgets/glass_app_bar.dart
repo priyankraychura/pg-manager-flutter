@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../theme/app_text_styles.dart';
 import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// Glassmorphic app bar that floats over the content with blur effect.
@@ -12,6 +14,8 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Widget? leading;
   final bool showBackButton;
+  final VoidCallback? onBackPressed;
+  final bool centerTitle;
 
   const GlassAppBar({
     super.key,
@@ -19,6 +23,8 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
     this.actions,
     this.leading,
     this.showBackButton = true,
+    this.onBackPressed,
+    this.centerTitle = false,
   });
 
   @override
@@ -48,6 +54,53 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
           : AppColors.lightGlassBorder;
     }
 
+    // Premium Custom Back Button
+    final Widget? leadingWidget = leading ??
+        (showBackButton
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: onBackPressed ?? () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.maybePop(context);
+                        } else {
+                          context.go('/dashboard');
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(12),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.06)
+                              : Colors.black.withValues(alpha: 0.04),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : Colors.black.withValues(alpha: 0.08),
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.chevron_left_rounded,
+                          size: 22,
+                          color: isDark
+                              ? AppColors.darkTextPrimary
+                              : AppColors.lightTextPrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : null);
+
     Widget appBarWidget = Container(
       decoration: BoxDecoration(
         color: bgColor,
@@ -61,9 +114,8 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
       child: AppBar(
         title: Text(
           title,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+          style: AppTextStyles.h2.copyWith(
+            fontWeight: FontWeight.w700,
             color: isDark
                 ? AppColors.darkTextPrimary
                 : AppColors.lightTextPrimary,
@@ -72,22 +124,22 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        centerTitle: true,
-        leading: leading ??
-            (showBackButton && Navigator.canPop(context)
-                ? IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_rounded, size: 20),
-                    onPressed: () => Navigator.pop(context),
-                  )
-                : null),
-        actions: actions,
+        centerTitle: centerTitle,
+        leading: leadingWidget,
+        leadingWidth: showBackButton ? 56 : null,
+        actions: actions?.map((w) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: w,
+          );
+        }).toList(),
       ),
     );
 
     if (!perfMode) {
       appBarWidget = ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Limit blur to 10
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: appBarWidget,
         ),
       );
@@ -96,3 +148,4 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return appBarWidget;
   }
 }
+

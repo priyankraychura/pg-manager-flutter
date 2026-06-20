@@ -7,6 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/validators.dart';
+import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_button.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/glass_text_field.dart';
@@ -89,25 +90,18 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Profile'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () => context.pop(),
-        ),
+      appBar: GlassAppBar(
+        title: 'Edit Profile',
+        onBackPressed: () => context.pop(),
       ),
-      extendBodyBehindAppBar: true,
       body: GradientBackground(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.screenPadding),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: AppSpacing.md),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.screenPadding),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: AppSpacing.md),
                   
                   GlassContainer(
                     padding: const EdgeInsets.all(AppSpacing.xl),
@@ -216,7 +210,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
