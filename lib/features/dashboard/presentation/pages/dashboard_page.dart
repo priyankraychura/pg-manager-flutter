@@ -18,19 +18,29 @@ import '../../domain/entities/dashboard_entity.dart';
 import '../../domain/repositories/dashboard_repository.dart';
 import '../../../rent/domain/entities/rent_entity.dart';
 import '../../../notices/domain/entities/notice_entity.dart';
+import '../../../../core/providers/update_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final dashboardProvider = FutureProvider<DashboardEntity>((ref) async {
   return getIt<DashboardRepository>().getDashboardData();
 });
 
-class DashboardPage extends ConsumerWidget {
+class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends ConsumerState<DashboardPage> {
+  bool _isUpdateDismissed = false;
+
+  @override
+  Widget build(BuildContext context) {
     final dashboardAsync = ref.watch(dashboardProvider);
     final authState = ref.watch(authProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final updateAsync = ref.watch(updateProvider);
 
     return SafeArea(
       child: dashboardAsync.when(
@@ -115,6 +125,37 @@ class DashboardPage extends ConsumerWidget {
                 ),
               ),
             ),
+
+            // Minor Update Card
+            if (!_isUpdateDismissed)
+              updateAsync.maybeWhen(
+                data: (info) {
+                  if (info.updateType == UpdateType.minor) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.screenPadding,
+                          0,
+                          AppSpacing.screenPadding,
+                          AppSpacing.md,
+                        ),
+                        child: _MinorUpdateCard(
+                          updateInfo: info,
+                          onDismiss: () {
+                            setState(() {
+                              _isUpdateDismissed = true;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                  return const SliverToBoxAdapter(child: SizedBox.shrink());
+                },
+                orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+              )
+            else
+              const SliverToBoxAdapter(child: SizedBox.shrink()),
 
             // Quick Actions
             SliverToBoxAdapter(
@@ -485,3 +526,83 @@ class _MealRow extends StatelessWidget {
     );
   }
 }
+
+class _MinorUpdateCard extends StatelessWidget {
+  final AppUpdateInfo updateInfo;
+  final VoidCallback onDismiss;
+
+  const _MinorUpdateCard({
+    required this.updateInfo,
+    required this.onDismiss,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Dismissible(
+      key: const Key('minor_update_card'),
+      direction: DismissDirection.horizontal,
+      onDismissed: (direction) => onDismiss(),
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: AppColors.primaryOrange.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+          border: Border.all(color: AppColors.primaryOrange.withValues(alpha: 0.3)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              decoration: BoxDecoration(
+                color: AppColors.primaryOrange.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.system_update_rounded,
+                color: AppColors.primaryOrange,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Update Available (${updateInfo.latestVersion})',
+                    style: AppTextStyles.body.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                    ),
+                  ),
+                  Text(
+                    'Tap to install the latest version.',
+                    style: AppTextStyles.caption.copyWith(
+                      color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.primaryOrange,
+                textStyle: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onPressed: () async {
+                final uri = Uri.parse(updateInfo.storeUrl);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+              child: const Text('UPDATE'),
+            ),
+          ],
+        ),
+      ),
+    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+  }
+}
+
