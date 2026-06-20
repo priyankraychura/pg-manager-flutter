@@ -59,10 +59,14 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
       body: GradientBackground(
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.screenPadding),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.screenPadding,
+              vertical: AppSpacing.xl,
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Back button
                 Align(
@@ -88,74 +92,83 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   ),
                 ),
 
-                const SizedBox(height: 40),
-
-                // Icon
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: AppColors.warning.withValues(alpha: 0.15),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.lock_reset_rounded,
-                    color: AppColors.warning,
-                    size: 40,
-                  ),
-                ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
-
                 const SizedBox(height: 30),
 
-                GlassContainer(
-                  padding: const EdgeInsets.all(AppSpacing.xxl),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Forgot Password',
-                          style: AppTextStyles.h1.copyWith(
-                            color: isDark
-                                ? AppColors.darkTextPrimary
-                                : AppColors.lightTextPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text(
-                          'Enter your registered email and we\'ll '
-                          'send you an OTP to reset your password.',
-                          style: AppTextStyles.body.copyWith(
-                            color: isDark
-                                ? AppColors.darkTextSecondary
-                                : AppColors.lightTextSecondary,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: AppSpacing.xxl),
-
-                        GlassTextField(
-                          controller: _emailController,
-                          label: 'Email',
-                          hint: 'Enter your registered email',
-                          prefixIcon: Icons.email_outlined,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: Validators.email,
-                        ),
-
-                        const SizedBox(height: AppSpacing.xxl),
-
-                        GlassButton(
-                          label: 'Send OTP',
-                          isLoading: authState.isLoading,
-                          onPressed: _handleSendOtp,
+                // Icon (Consistent with login screen style)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      color: AppColors.warning,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.warning.withValues(alpha: 0.25),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
                         ),
                       ],
                     ),
+                    child: const Icon(
+                      Icons.lock_reset_rounded,
+                      color: Colors.white,
+                      size: 36,
+                    ),
+                  ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
+                ),
+
+                const SizedBox(height: AppSpacing.xl),
+
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Forgot Password',
+                        style: AppTextStyles.h1.copyWith(
+                          color: isDark
+                              ? AppColors.darkTextPrimary
+                              : AppColors.lightTextPrimary,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
+                      Text(
+                        'Enter your registered email and we\'ll '
+                        'send you an OTP to reset your password.',
+                        style: AppTextStyles.body.copyWith(
+                          color: isDark
+                              ? AppColors.darkTextSecondary
+                              : AppColors.lightTextSecondary,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+
+                      GlassTextField(
+                        controller: _emailController,
+                        label: 'Email',
+                        hint: 'Enter your registered email',
+                        prefixIcon: Icons.email_outlined,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: Validators.email,
+                      ),
+
+                      const SizedBox(height: AppSpacing.xl),
+
+                      GlassButton(
+                        label: 'Send OTP',
+                        isLoading: authState.isLoading,
+                        onPressed: _handleSendOtp,
+                      ),
+                    ],
                   ),
                 ).animate()
                     .fadeIn(duration: 600.ms)
-                    .slideY(begin: 0.1, end: 0),
+                    .slideY(begin: 0.05, end: 0),
               ],
             ),
           ),

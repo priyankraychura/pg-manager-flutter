@@ -10,7 +10,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/glass_button.dart';
-import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../providers/auth_provider.dart';
 
@@ -159,10 +158,14 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
       body: GradientBackground(
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.screenPadding),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.screenPadding,
+              vertical: AppSpacing.xl,
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Back button
                 Align(
@@ -188,74 +191,79 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                   ),
                 ),
 
-                const SizedBox(height: 40),
-
-                // Lock Icon
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.accentGradient,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryOrange.withValues(alpha: 0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.shield_outlined,
-                    color: Colors.white,
-                    size: 36,
-                  ),
-                ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
-
                 const SizedBox(height: 30),
 
-                GlassContainer(
-                  padding: const EdgeInsets.all(AppSpacing.xxl),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Verify OTP',
-                        style: AppTextStyles.h1.copyWith(
-                          color: isDark
-                              ? AppColors.darkTextPrimary
-                              : AppColors.lightTextPrimary,
+                // Lock Icon
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryOrange,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryOrange.withValues(alpha: 0.25),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.shield_outlined,
+                      color: Colors.white,
+                      size: 36,
+                    ),
+                  ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
+                ),
+
+                const SizedBox(height: AppSpacing.xl),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Verify OTP',
+                      style: AppTextStyles.h1.copyWith(
+                        color: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.lightTextPrimary,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      'Enter the 6-digit code sent to\n${widget.destination}',
+                      style: AppTextStyles.body.copyWith(
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.lightTextSecondary,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // OTP Input Fields
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        AppConstants.otpLength,
+                        (i) => _OtpDigitField(
+                          controller: _controllers[i],
+                          focusNode: _focusNodes[i],
+                          isDark: isDark,
+                          onChanged: (val) => _onOtpChanged(i, val),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text(
-                        'Enter the 6-digit code sent to\n${widget.destination}',
-                        style: AppTextStyles.body.copyWith(
-                          color: isDark
-                              ? AppColors.darkTextSecondary
-                              : AppColors.lightTextSecondary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: AppSpacing.xxxl),
+                    ),
 
-                      // OTP Input Fields
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(
-                          AppConstants.otpLength,
-                          (i) => _OtpDigitField(
-                            controller: _controllers[i],
-                            focusNode: _focusNodes[i],
-                            isDark: isDark,
-                            onChanged: (val) => _onOtpChanged(i, val),
-                          ),
-                        ),
-                      ),
+                    const SizedBox(height: AppSpacing.xxl),
 
-                      const SizedBox(height: AppSpacing.xxl),
-
-                      // Resend
-                      _canResend
+                    // Resend
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: _canResend
                           ? GestureDetector(
                               onTap: _handleResend,
                               child: Text(
@@ -274,49 +282,49 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                                     : AppColors.lightTextTertiary,
                               ),
                             ),
+                    ),
 
-                      const SizedBox(height: AppSpacing.xxl),
+                    const SizedBox(height: AppSpacing.xxl),
 
-                      GlassButton(
-                        label: 'Verify',
-                        isLoading: authState.isLoading,
-                        onPressed: _handleVerify,
+                    GlassButton(
+                      label: 'Verify',
+                      isLoading: authState.isLoading,
+                      onPressed: _handleVerify,
+                    ),
+
+                    const SizedBox(height: AppSpacing.lg),
+
+                    // Hint for demo
+                    Container(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
+                        color: AppColors.info.withValues(alpha: 0.08),
+                        borderRadius:
+                            BorderRadius.circular(AppSpacing.radiusMd),
                       ),
-
-                      const SizedBox(height: AppSpacing.lg),
-
-                      // Hint for demo
-                      Container(
-                        padding: const EdgeInsets.all(AppSpacing.md),
-                        decoration: BoxDecoration(
-                          color: AppColors.info.withValues(alpha: 0.08),
-                          borderRadius:
-                              BorderRadius.circular(AppSpacing.radiusMd),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.info_outline,
-                              size: 16,
-                              color: AppColors.info,
-                            ),
-                            const SizedBox(width: AppSpacing.sm),
-                            Expanded(
-                              child: Text(
-                                'Demo mode: Use OTP 123456',
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.info,
-                                ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.info_outline,
+                            size: 16,
+                            color: AppColors.info,
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: Text(
+                              'Demo mode: Use OTP 123456',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.info,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ).animate()
                     .fadeIn(duration: 600.ms)
-                    .slideY(begin: 0.1, end: 0),
+                    .slideY(begin: 0.05, end: 0),
               ],
             ),
           ),
