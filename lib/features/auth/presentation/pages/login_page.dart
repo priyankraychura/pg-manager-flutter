@@ -192,31 +192,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       .slideY(begin: 0.05, end: 0),
 
                   const SizedBox(height: AppSpacing.xxl),
-
-                  // Register Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account? ",
-                        style: AppTextStyles.body.copyWith(
-                          color: isDark
-                              ? AppColors.darkTextSecondary
-                              : AppColors.lightTextSecondary,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.push('/register'),
-                        child: Text(
-                          'Sign Up',
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.primaryOrange,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),

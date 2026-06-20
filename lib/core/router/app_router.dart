@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
-import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
@@ -26,10 +25,7 @@ final appRouter = GoRouter(
       path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
-    GoRoute(
-      path: '/register',
-      builder: (context, state) => const RegisterPage(),
-    ),
+
     GoRoute(
       path: '/otp-verification',
       builder: (context, state) {
