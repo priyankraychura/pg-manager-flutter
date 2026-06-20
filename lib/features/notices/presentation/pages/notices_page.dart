@@ -9,6 +9,7 @@ import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../../../../core/widgets/status_badge.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/notice_entity.dart';
 import '../../domain/repositories/notices_repository.dart';
@@ -41,7 +42,7 @@ class NoticesPage extends ConsumerWidget {
       ),
       body: GradientBackground(
         child: noticesAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const CommonLoader(),
           error: (e, _) => Center(child: Text('Error: $e')),
           data: (notices) => ListView.builder(
             padding: const EdgeInsets.all(AppSpacing.screenPadding),

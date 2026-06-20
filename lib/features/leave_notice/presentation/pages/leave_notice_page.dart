@@ -11,6 +11,7 @@ import '../../../../core/widgets/glass_button.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/glass_text_field.dart';
 import '../../../../core/widgets/gradient_background.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/leave_notice_entity.dart';
 import '../../domain/repositories/leave_notice_repository.dart';
@@ -77,7 +78,7 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
       ),
       body: GradientBackground(
         child: noticeAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const CommonLoader(),
           error: (e, _) => Center(child: Text('Error: $e')),
           data: (notice) {
             if (notice != null) return _ExistingNotice(notice: notice, isDark: isDark);

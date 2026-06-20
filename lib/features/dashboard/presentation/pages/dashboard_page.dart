@@ -11,6 +11,7 @@ import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/section_header.dart';
 import '../../../../core/widgets/status_badge.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/dashboard_entity.dart';
@@ -33,7 +34,7 @@ class DashboardPage extends ConsumerWidget {
 
     return SafeArea(
       child: dashboardAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const CommonLoader(),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (data) => CustomScrollView(
           slivers: [

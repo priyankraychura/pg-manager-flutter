@@ -10,6 +10,7 @@ import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/gradient_background.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/room_entity.dart';
 import '../../domain/repositories/room_repository.dart';
@@ -33,7 +34,7 @@ class RoomDetailsPage extends ConsumerWidget {
       ),
       body: GradientBackground(
         child: roomAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const CommonLoader(),
           error: (e, _) => Center(child: Text('Error: $e')),
           data: (room) => SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.screenPadding),

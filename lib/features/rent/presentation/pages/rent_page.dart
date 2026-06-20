@@ -11,6 +11,7 @@ import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_button.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/status_badge.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/rent_entity.dart';
 import '../../domain/repositories/rent_repository.dart';
@@ -37,17 +38,17 @@ class RentPage extends ConsumerWidget {
         title: 'Rent & Payments',
         subtitle: 'Monthly dues & payment history',
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.screenPadding),
-              child: historyAsync.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, _) => Text('Error: $e'),
-                data: (payments) {
-                  final current = payments.isNotEmpty ? payments.first : null;
-                  return Column(
+      body: historyAsync.when(
+        loading: () => const CommonLoader(),
+        error: (e, _) => Center(child: Text('Error: $e')),
+        data: (payments) {
+          final current = payments.isNotEmpty ? payments.first : null;
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.screenPadding),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (current != null &&
@@ -67,13 +68,13 @@ class RentPage extends ConsumerWidget {
                         (p) => _PaymentTile(payment: p, isDark: isDark),
                       ),
                     ],
-                  );
-                },
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 100)),
-        ],
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+            ],
+          );
+        },
       ),
     );
   }

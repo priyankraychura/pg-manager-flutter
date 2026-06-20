@@ -12,6 +12,7 @@ import '../../../../core/widgets/glass_text_field.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../../../../core/widgets/status_badge.dart';
 import '../../../../core/widgets/empty_state.dart';
+import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/complaint_entity.dart';
 import '../../domain/repositories/complaints_repository.dart';
@@ -50,7 +51,7 @@ class ComplaintsPage extends ConsumerWidget {
       ),
       body: GradientBackground(
         child: complaintsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const CommonLoader(),
           error: (e, _) => Center(child: Text('Error: $e')),
           data: (complaints) {
             if (complaints.isEmpty) {
