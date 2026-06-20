@@ -80,34 +80,30 @@ class ProfilePage extends ConsumerWidget {
                               : _buildInitialsAvatar(user, fontSize: 24),
                         ),
                       ),
-                      // Interactive Edit badge on avatar corner
+                      // Verified badge on avatar corner
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: GestureDetector(
-                          onTap: () => context.push('/edit-profile'),
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+                            shape: BoxShape.circle,
+                            border: Border.all(
                               color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.primaryOrange,
-                                width: 1.5,
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.15),
+                                blurRadius: 4,
+                                offset: const Offset(0, 1),
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.15),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(
-                              Icons.edit_rounded,
-                              size: 10,
-                              color: AppColors.primaryOrange,
-                            ),
+                            ],
+                          ),
+                          child: const Icon(
+                            Icons.verified_rounded,
+                            size: 18,
+                            color: AppColors.info,
                           ),
                         ),
                       ),
@@ -135,66 +131,31 @@ class ProfilePage extends ConsumerWidget {
 
                         const SizedBox(height: 4),
 
-                        // Active Tenant & Verified Row
+                        // User Email
                         Row(
                           children: [
-                            Container(
-                              width: 6,
-                              height: 6,
-                              decoration: const BoxDecoration(
-                                color: AppColors.success,
-                                shape: BoxShape.circle,
-                              ),
+                            Icon(
+                              Icons.email_outlined,
+                              size: 14,
+                              color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Active Tenant',
-                              style: AppTextStyles.caption.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.success,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Icon(
-                              Icons.verified_user_rounded,
-                              size: 12,
-                              color: AppColors.info,
-                            ),
-                            const SizedBox(width: 3),
-                            Text(
-                              'Verified',
-                              style: AppTextStyles.caption.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.info,
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                user.email,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
                         ),
 
-                        const SizedBox(height: 8),
 
-                        // PG and Room Badges
-                        Wrap(
-                          spacing: AppSpacing.xs,
-                          runSpacing: AppSpacing.xs,
-                          children: [
-                            if (user.pgName != null && user.pgName!.isNotEmpty)
-                              _buildHeaderChip(
-                                icon: Icons.business_rounded,
-                                label: user.pgName!,
-                                themeColor: AppColors.primaryOrange,
-                                isDark: isDark,
-                              ),
-                            _buildHeaderChip(
-                              icon: Icons.meeting_room_rounded,
-                              label: 'Room ${user.roomNumber ?? 'N/A'}',
-                              themeColor: AppColors.accentTeal,
-                              isDark: isDark,
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -209,13 +170,7 @@ class ProfilePage extends ConsumerWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 children: [
-                  _InfoRow(
-                    icon: Icons.email_outlined,
-                    label: 'Email',
-                    value: user.email,
-                    color: AppColors.info,
-                  ),
-                  const Divider(height: 24, thickness: 0.5),
+
                   _InfoRow(
                     icon: Icons.phone_outlined,
                     label: 'Phone',
@@ -305,42 +260,7 @@ class ProfilePage extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeaderChip({
-    required IconData icon,
-    required String label,
-    required Color themeColor,
-    required bool isDark,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: themeColor.withValues(alpha: isDark ? 0.12 : 0.08),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-        border: Border.all(
-          color: themeColor.withValues(alpha: 0.25),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: themeColor),
-          const SizedBox(width: 4),
-          Flexible(
-            child: Text(
-              label,
-              style: AppTextStyles.bodySmall.copyWith(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
 class _InfoRow extends StatelessWidget {
