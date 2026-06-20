@@ -5,7 +5,7 @@ import '../../core/widgets/glass_bottom_nav.dart';
 import '../../core/widgets/gradient_background.dart';
 
 /// Main navigation shell with glassmorphic bottom nav.
-/// Wraps the 4 main tabs: Home, Payments, Menu, Profile.
+/// Wraps the 4 main tabs: Home, Payments, Room, Profile.
 class NavigationShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -36,9 +36,9 @@ class NavigationShell extends StatelessWidget {
             label: 'Payments',
           ),
           GlassBottomNavItem(
-            icon: Icons.restaurant_menu_outlined,
-            activeIcon: Icons.restaurant_menu_rounded,
-            label: 'Menu',
+            icon: Icons.bed_outlined,
+            activeIcon: Icons.bed_rounded,
+            label: 'Room',
           ),
           GlassBottomNavItem(
             icon: Icons.person_outline_rounded,

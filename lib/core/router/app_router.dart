@@ -78,8 +78,8 @@ final appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/menu',
-              builder: (context, state) => const MenuPage(),
+              path: '/room',
+              builder: (context, state) => const RoomDetailsPage(),
             ),
           ],
         ),
@@ -108,8 +108,8 @@ final appRouter = GoRouter(
       builder: (context, state) => const NoticesPage(),
     ),
     GoRoute(
-      path: '/room',
-      builder: (context, state) => const RoomDetailsPage(),
+      path: '/menu',
+      builder: (context, state) => const MenuPage(),
     ),
     GoRoute(
       path: '/leave-notice',

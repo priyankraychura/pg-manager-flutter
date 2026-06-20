@@ -224,22 +224,6 @@ class ProfilePage extends ConsumerWidget {
 
             // Quick Links
             GlassCard.info(
-              icon: Icons.edit_outlined,
-              title: 'Edit Profile',
-              subtitle: 'Update personal & emergency details',
-              iconColor: AppColors.primaryOrange,
-              onTap: () => context.push('/edit-profile'),
-              trailing: const Icon(Icons.chevron_right, size: 20),
-            ),
-            GlassCard.info(
-              icon: Icons.bed_outlined,
-              title: 'Room Details',
-              subtitle: 'View room info & roommates',
-              iconColor: AppColors.secondarySlate,
-              onTap: () => context.push('/room'),
-              trailing: const Icon(Icons.chevron_right, size: 20),
-            ),
-            GlassCard.info(
               icon: Icons.logout_outlined,
               title: 'Leave Notice',
               subtitle: 'Submit notice to vacate',
