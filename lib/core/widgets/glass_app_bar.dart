@@ -10,6 +10,9 @@ import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// Glassmorphic app bar that floats over the content with blur effect.
 class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  static const double _iconEdgePadding = 16.0;
+  static const double _iconButtonSize = 38.0;
+
   final String title;
   final String? subtitle;
   final List<Widget>? actions;
@@ -67,7 +70,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
     Widget buildIconButton({
       required IconData icon,
       required VoidCallback onTap,
-      EdgeInsetsGeometry padding = const EdgeInsets.only(left: 16.0),
+      required EdgeInsetsGeometry padding,
       String? tooltip,
     }) {
       final button = Material(
@@ -76,8 +79,8 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(100),
           child: Ink(
-            width: 38,
-            height: 38,
+            width: _iconButtonSize,
+            height: _iconButtonSize,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
             ),
@@ -115,6 +118,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     context.go('/dashboard');
                   }
                 },
+                padding: const EdgeInsets.only(left: _iconEdgePadding),
               )
             : null);
 
@@ -122,7 +126,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ? buildIconButton(
             icon: actionIcon!,
             onTap: onActionPressed!,
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: _iconEdgePadding),
             tooltip: actionTooltip,
           )
         : null;
@@ -173,11 +177,13 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0,
         centerTitle: centerTitle,
         leading: leadingWidget,
-        leadingWidth: showBackButton ? 64 : null,
+        leadingWidth: showBackButton
+            ? _iconEdgePadding + _iconButtonSize
+            : null,
         actions: [
           ...?actions?.map(
             (w) => Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: _iconEdgePadding),
               child: w,
             ),
           ),
