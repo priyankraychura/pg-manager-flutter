@@ -133,18 +133,30 @@ class RoomDetailsPage extends ConsumerWidget {
                       const SizedBox(height: AppSpacing.xl),
                       
                       // Room Details InfoRows
-                      _InfoRow(
-                        icon: Icons.layers_outlined,
-                        label: 'Floor',
-                        value: 'Floor ${room.floor}',
-                        color: AppColors.info,
-                      ),
-                      const Divider(height: 24, thickness: 0.5),
-                      _InfoRow(
-                        icon: Icons.bed_outlined,
-                        label: 'Bed Type',
-                        value: room.bedType,
-                        color: AppColors.warning,
+                      IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: _InfoRow(
+                                icon: Icons.layers_outlined,
+                                label: 'Floor',
+                                value: 'Floor ${room.floor}',
+                                color: AppColors.info,
+                              ),
+                            ),
+                            const VerticalDivider(width: 24, thickness: 0.5),
+                            Expanded(
+                              flex: 3,
+                              child: _InfoRow(
+                                icon: Icons.bed_outlined,
+                                label: 'Room Type',
+                                value: room.bedType,
+                                color: AppColors.warning,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
