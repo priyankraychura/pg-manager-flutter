@@ -13,6 +13,9 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final String? subtitle;
   final List<Widget>? actions;
+  final IconData? actionIcon;
+  final VoidCallback? onActionPressed;
+  final String? actionTooltip;
   final Widget? leading;
   final bool showBackButton;
   final VoidCallback? onBackPressed;
@@ -23,6 +26,9 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
     required this.title,
     this.subtitle,
     this.actions,
+    this.actionIcon,
+    this.onActionPressed,
+    this.actionTooltip,
     this.leading,
     this.showBackButton = true,
     this.onBackPressed,
@@ -58,43 +64,68 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
     }
 
     // Premium Custom Back Button
+    Widget buildIconButton({
+      required IconData icon,
+      required VoidCallback onTap,
+      EdgeInsetsGeometry padding = const EdgeInsets.only(left: 16.0),
+      String? tooltip,
+    }) {
+      final button = Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(100),
+          child: Ink(
+            width: 38,
+            height: 38,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Icon(
+                icon,
+                size: 18,
+                color: isDark
+                    ? AppColors.darkTextPrimary
+                    : AppColors.lightTextPrimary,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      return Center(
+        child: Padding(
+          padding: padding,
+          child: tooltip != null
+              ? Tooltip(message: tooltip, child: button)
+              : button,
+        ),
+      );
+    }
+
     final Widget? leadingWidget = leading ??
         (showBackButton
-            ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: onBackPressed ?? () {
-                        if (Navigator.canPop(context)) {
-                          Navigator.maybePop(context);
-                        } else {
-                          context.go('/dashboard');
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      child: Ink(
-                        width: 38,
-                        height: 38,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: 18,
-                            color: isDark
-                                ? AppColors.darkTextPrimary
-                                : AppColors.lightTextPrimary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            ? buildIconButton(
+                icon: Icons.arrow_back_ios_new_rounded,
+                onTap: onBackPressed ?? () {
+                  if (Navigator.canPop(context)) {
+                    Navigator.maybePop(context);
+                  } else {
+                    context.go('/dashboard');
+                  }
+                },
               )
             : null);
+
+    final Widget? trailingAction = actionIcon != null && onActionPressed != null
+        ? buildIconButton(
+            icon: actionIcon!,
+            onTap: onActionPressed!,
+            padding: const EdgeInsets.only(right: 8.0),
+            tooltip: actionTooltip,
+          )
+        : null;
 
     Widget appBarWidget = Container(
       decoration: BoxDecoration(
@@ -143,12 +174,15 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         centerTitle: centerTitle,
         leading: leadingWidget,
         leadingWidth: showBackButton ? 64 : null,
-        actions: actions?.map((w) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: w,
-          );
-        }).toList(),
+        actions: [
+          ...?actions?.map(
+            (w) => Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: w,
+            ),
+          ),
+          ?trailingAction,
+        ],
       ),
     );
 

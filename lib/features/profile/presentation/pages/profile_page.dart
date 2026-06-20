@@ -8,6 +8,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/formatters.dart';
+import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../auth/domain/entities/user_entity.dart';
@@ -21,15 +22,30 @@ class ProfilePage extends ConsumerWidget {
     final user = ref.watch(authProvider).user;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    if (user == null) return const Center(child: Text('Not logged in'));
+    if (user == null) {
+      return const Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: GlassAppBar(
+          title: 'Profile',
+          subtitle: 'Your account & quick links',
+        ),
+        body: Center(child: Text('Not logged in')),
+      );
+    }
 
-    return SafeArea(
-      child: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: GlassAppBar(
+        title: 'Profile',
+        subtitle: 'Your account & quick links',
+        actionIcon: Icons.edit_outlined,
+        actionTooltip: 'Edit Profile',
+        onActionPressed: () => context.push('/edit-profile'),
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.screenPadding),
         child: Column(
           children: [
-            const SizedBox(height: AppSpacing.lg),
-
             // Premium Glassmorphic Profile Header Card
             GlassContainer(
               padding: const EdgeInsets.all(AppSpacing.lg),
