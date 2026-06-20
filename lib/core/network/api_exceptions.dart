@@ -10,21 +10,20 @@ class ApiException implements Exception {
 }
 
 class NetworkException extends ApiException {
-  const NetworkException([String message = 'No internet connection'])
-      : super(message);
+  const NetworkException([super.message = 'No internet connection']);
 }
 
 class ServerException extends ApiException {
-  const ServerException([String message = 'Server error occurred'])
-      : super(message, statusCode: 500);
+  const ServerException([super.message = 'Server error occurred'])
+      : super(statusCode: 500);
 }
 
 class UnauthorizedException extends ApiException {
-  const UnauthorizedException([String message = 'Unauthorized access'])
-      : super(message, statusCode: 401);
+  const UnauthorizedException([super.message = 'Unauthorized access'])
+      : super(statusCode: 401);
 }
 
 class NotFoundException extends ApiException {
-  const NotFoundException([String message = 'Resource not found'])
-      : super(message, statusCode: 404);
+  const NotFoundException([super.message = 'Resource not found'])
+      : super(statusCode: 404);
 }

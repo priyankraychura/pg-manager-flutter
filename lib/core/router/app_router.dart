@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
@@ -10,6 +8,7 @@ import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/rent/presentation/pages/rent_page.dart';
 import '../../features/menu/presentation/pages/menu_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
 import '../../features/wifi/presentation/pages/wifi_page.dart';
 import '../../features/complaints/presentation/pages/complaints_page.dart';
 import '../../features/notices/presentation/pages/notices_page.dart';
@@ -115,6 +114,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/leave-notice',
       builder: (context, state) => const LeaveNoticePage(),
+    ),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) => const EditProfilePage(),
     ),
     GoRoute(
       path: '/settings',

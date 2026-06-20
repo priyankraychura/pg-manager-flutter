@@ -11,8 +11,6 @@ import '../../../../core/widgets/glass_button.dart';
 import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/glass_text_field.dart';
 import '../../../../core/widgets/gradient_background.dart';
-import '../../../../core/widgets/status_badge.dart';
-import '../../../../core/widgets/empty_state.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/leave_notice_entity.dart';
 import '../../domain/repositories/leave_notice_repository.dart';

@@ -37,7 +37,7 @@ class SettingsPage extends ConsumerWidget {
                     Expanded(child: Text('Dark Mode', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500))),
                     Switch.adaptive(
                       value: isDarkMode,
-                      activeColor: AppColors.primaryPurple,
+                      activeThumbColor: AppColors.primaryPurple,
                       onChanged: (_) => ref.read(themeProvider.notifier).toggle(),
                     ),
                   ],

@@ -23,6 +23,7 @@ class GlassTextField extends StatelessWidget {
   final int maxLines;
   final bool autofocus;
   final FocusNode? focusNode;
+  final ValueChanged<String>? onFieldSubmitted;
 
   const GlassTextField({
     super.key,
@@ -42,6 +43,7 @@ class GlassTextField extends StatelessWidget {
     this.maxLines = 1,
     this.autofocus = false,
     this.focusNode,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -75,6 +77,7 @@ class GlassTextField extends StatelessWidget {
           maxLines: maxLines,
           autofocus: autofocus,
           focusNode: focusNode,
+          onFieldSubmitted: onFieldSubmitted,
           style: AppTextStyles.input.copyWith(
             color: isDark
                 ? AppColors.darkTextPrimary

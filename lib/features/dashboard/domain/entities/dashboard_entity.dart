@@ -1,7 +1,6 @@
-import '../../rent/domain/entities/rent_entity.dart';
-import '../../menu/domain/entities/meal_entity.dart';
-import '../../notices/domain/entities/notice_entity.dart';
-import '../../complaints/domain/entities/complaint_entity.dart';
+import '../../../rent/domain/entities/rent_entity.dart';
+import '../../../menu/domain/entities/meal_entity.dart';
+import '../../../notices/domain/entities/notice_entity.dart';
 
 /// Dashboard data aggregating summaries from multiple features.
 class DashboardEntity {

@@ -17,6 +17,7 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/dashboard_entity.dart';
 import '../../domain/repositories/dashboard_repository.dart';
 import '../../../rent/domain/entities/rent_entity.dart';
+import '../../../notices/domain/entities/notice_entity.dart';
 
 final dashboardProvider = FutureProvider<DashboardEntity>((ref) async {
   return getIt<DashboardRepository>().getDashboardData();

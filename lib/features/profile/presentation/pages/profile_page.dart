@@ -10,7 +10,6 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/glass_container.dart';
-import '../../../../core/widgets/gradient_background.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -74,6 +73,14 @@ class ProfilePage extends ConsumerWidget {
             const SizedBox(height: AppSpacing.xl),
 
             // Quick Links
+            GlassCard.info(
+              icon: Icons.edit_outlined,
+              title: 'Edit Profile',
+              subtitle: 'Update personal & emergency details',
+              iconColor: AppColors.primaryPurple,
+              onTap: () => context.push('/edit-profile'),
+              trailing: const Icon(Icons.chevron_right, size: 20),
+            ),
             GlassCard.info(
               icon: Icons.bed_outlined,
               title: 'Room Details',
