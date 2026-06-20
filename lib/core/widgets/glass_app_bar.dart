@@ -108,6 +108,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         toolbarHeight: preferredSize.height,
+        titleSpacing: showBackButton ? 0.0 : 20.0,
         title: Column(
           crossAxisAlignment:
               centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.start,
