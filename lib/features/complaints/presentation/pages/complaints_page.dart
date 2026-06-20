@@ -40,15 +40,18 @@ class ComplaintsPage extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: GlassAppBar(
+      appBar: const GlassAppBar(
         title: 'Complaints',
         subtitle: 'Raise & track maintenance issues',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () => _showRaiseComplaintSheet(context, ref),
-          ),
-        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 24.0, right: 8.0),
+        child: FloatingActionButton(
+          backgroundColor: AppColors.primaryOrange,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 30),
+          onPressed: () => _showRaiseComplaintSheet(context, ref),
+        ),
       ),
       body: GradientBackground(
         child: complaintsAsync.when(
