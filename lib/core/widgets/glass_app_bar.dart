@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_text_styles.dart';
-import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// Glassmorphic app bar that floats over the content with blur effect.
 class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -45,26 +43,12 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final perfMode = ref.watch(performanceModeProvider);
 
-    final Color bgColor;
-    final Color borderColor;
-
-    if (perfMode) {
-      // Clean solid fallback under performance mode
-      bgColor = isDark ? AppColors.darkBackground : AppColors.lightBackground;
-      borderColor = isDark
-          ? AppColors.darkGlassBorder.withValues(alpha: 0.2)
-          : AppColors.lightGlassBorder.withValues(alpha: 0.1);
-    } else {
-      // Frosted translucent fill
-      bgColor = isDark
-          ? AppColors.darkGlassFill.withValues(alpha: 0.8)
-          : AppColors.lightGlassFill.withValues(alpha: 0.8);
-      borderColor = isDark
-          ? AppColors.darkGlassBorder
-          : AppColors.lightGlassBorder;
-    }
+    // Clean solid fallback
+    final Color bgColor = isDark ? AppColors.darkBackground : AppColors.lightBackground;
+    final Color borderColor = isDark
+        ? AppColors.darkGlassBorder.withValues(alpha: 0.2)
+        : AppColors.lightGlassBorder.withValues(alpha: 0.1);
 
     // Premium Custom Back Button
     Widget buildIconButton({
@@ -191,15 +175,6 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ],
       ),
     );
-
-    if (!perfMode) {
-      appBarWidget = ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: appBarWidget,
-        ),
-      );
-    }
 
     return appBarWidget;
   }

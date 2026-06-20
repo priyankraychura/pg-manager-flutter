@@ -1,10 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
-import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// Glassmorphic bottom navigation bar with animated indicator.
 class GlassBottomNav extends ConsumerWidget {
@@ -22,28 +20,14 @@ class GlassBottomNav extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final perfMode = ref.watch(performanceModeProvider);
 
-    final Color navBgColor;
-    final Color navBorderColor;
-
-    if (perfMode) {
-      // Solid/highly opaque container fallback for better performance
-      navBgColor = isDark
-          ? AppColors.darkSurface.withValues(alpha: 0.95)
-          : AppColors.lightSurface.withValues(alpha: 0.95);
-      navBorderColor = isDark
-          ? AppColors.darkGlassBorder.withValues(alpha: 0.2)
-          : AppColors.lightGlassBorder.withValues(alpha: 0.3);
-    } else {
-      // Translucent container fill for frosted look
-      navBgColor = isDark
-          ? AppColors.darkGlassFill.withValues(alpha: 0.12)
-          : AppColors.lightGlassFill.withValues(alpha: 0.65);
-      navBorderColor = isDark
-          ? AppColors.darkGlassBorder.withValues(alpha: 0.15)
-          : AppColors.lightGlassBorder.withValues(alpha: 0.7);
-    }
+    // Solid/highly opaque container fallback
+    final Color navBgColor = isDark
+        ? AppColors.darkSurface.withValues(alpha: 0.95)
+        : AppColors.lightSurface.withValues(alpha: 0.95);
+    final Color navBorderColor = isDark
+        ? AppColors.darkGlassBorder.withValues(alpha: 0.2)
+        : AppColors.lightGlassBorder.withValues(alpha: 0.3);
 
     Widget navWidget = Container(
       height: 68,
@@ -88,15 +72,7 @@ class GlassBottomNav extends ConsumerWidget {
             ),
           ],
         ),
-        child: perfMode
-            ? navWidget
-            : ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Limit blur to 10
-                  child: navWidget,
-                ),
-              ),
+        child: navWidget,
       ),
     );
   }

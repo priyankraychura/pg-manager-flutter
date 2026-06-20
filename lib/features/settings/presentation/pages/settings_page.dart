@@ -21,7 +21,7 @@ class SettingsPage extends ConsumerWidget {
     return Scaffold(
       appBar: const GlassAppBar(
         title: 'Settings',
-        subtitle: 'Theme, notifications, & performance',
+        subtitle: 'Theme & notifications',
       ),
       body: GradientBackground(
         child: SingleChildScrollView(
@@ -46,36 +46,7 @@ class SettingsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.md),
-              GlassCard(
-                animate: false,
-                child: Row(
-                  children: [
-                    Icon(Icons.speed_outlined, color: AppColors.primaryOrange),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Performance Mode', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500)),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Disables heavy real-time blurs & scroll animations for 60/120 FPS smoothness.',
-                            style: AppTextStyles.caption.copyWith(
-                              color: isDarkMode ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Switch.adaptive(
-                      value: ref.watch(performanceModeProvider),
-                      activeThumbColor: AppColors.primaryOrange,
-                      onChanged: (_) => ref.read(performanceModeProvider.notifier).toggle(),
-                    ),
-                  ],
-                ),
-              ),
+
 
               const SizedBox(height: AppSpacing.xxl),
               Text('General', style: AppTextStyles.h3),
