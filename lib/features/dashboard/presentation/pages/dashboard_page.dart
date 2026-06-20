@@ -153,7 +153,9 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                   return const SliverToBoxAdapter(child: SizedBox.shrink());
                 },
                 orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
-              ),
+              )
+            else
+              const SliverToBoxAdapter(child: SizedBox.shrink()),
 
             // Quick Actions
             SliverToBoxAdapter(
