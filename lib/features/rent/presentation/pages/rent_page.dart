@@ -35,8 +35,16 @@ class RentPage extends ConsumerWidget {
         slivers: [
           const SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(AppSpacing.screenPadding, AppSpacing.lg, AppSpacing.screenPadding, 0),
-              child: Text('Rent & Payments', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
+              padding: EdgeInsets.fromLTRB(
+                AppSpacing.screenPadding,
+                AppSpacing.lg,
+                AppSpacing.screenPadding,
+                0,
+              ),
+              child: Text(
+                'Rent & Payments',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -50,7 +58,8 @@ class RentPage extends ConsumerWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (current != null && current.status != RentStatus.paid) ...[
+                      if (current != null &&
+                          current.status != RentStatus.paid) ...[
                         _CurrentRentCard(rent: current, isDark: isDark),
                         const SizedBox(height: AppSpacing.lg),
                         GlassButton(
@@ -62,7 +71,9 @@ class RentPage extends ConsumerWidget {
                       ],
                       Text('Payment History', style: AppTextStyles.h2),
                       const SizedBox(height: AppSpacing.md),
-                      ...payments.map((p) => _PaymentTile(payment: p, isDark: isDark)),
+                      ...payments.map(
+                        (p) => _PaymentTile(payment: p, isDark: isDark),
+                      ),
                     ],
                   );
                 },
@@ -84,17 +95,28 @@ class RentPage extends ConsumerWidget {
         padding: const EdgeInsets.all(AppSpacing.xxl),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.darkSurface : Colors.white,
+              ? AppColors.darkSurface
+              : Colors.white,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
             const SizedBox(height: AppSpacing.xxl),
             Text('Mark Rent as Paid', style: AppTextStyles.h2),
             const SizedBox(height: AppSpacing.sm),
-            Text('Upload a screenshot of your payment as proof.', style: AppTextStyles.body.copyWith(color: Colors.grey)),
+            Text(
+              'Upload a screenshot of your payment as proof.',
+              style: AppTextStyles.body.copyWith(color: Colors.grey),
+            ),
             const SizedBox(height: AppSpacing.xxl),
             GlassButton.outlined(
               label: 'Upload Screenshot',
@@ -102,7 +124,16 @@ class RentPage extends ConsumerWidget {
               onPressed: () {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: const Text('Payment marked as processing! Admin will verify.'), backgroundColor: AppColors.success, behavior: SnackBarBehavior.floating, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                  SnackBar(
+                    content: const Text(
+                      'Payment marked as processing! Admin will verify.',
+                    ),
+                    backgroundColor: AppColors.success,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 );
               },
             ),
@@ -112,7 +143,14 @@ class RentPage extends ConsumerWidget {
               onPressed: () {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: const Text('Payment marked! Admin will verify.'), backgroundColor: AppColors.success, behavior: SnackBarBehavior.floating, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                  SnackBar(
+                    content: const Text('Payment marked! Admin will verify.'),
+                    backgroundColor: AppColors.success,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 );
               },
             ),
@@ -142,14 +180,26 @@ class _CurrentRentCard extends StatelessWidget {
               Text(rent.month, style: AppTextStyles.h3),
               StatusBadge(
                 label: rent.status.name.toUpperCase(),
-                type: rent.status == RentStatus.paid ? StatusType.success : StatusType.warning,
+                type: rent.status == RentStatus.paid
+                    ? StatusType.success
+                    : StatusType.warning,
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(Formatters.currency(rent.amount), style: AppTextStyles.display.copyWith(fontSize: 36)),
+          Text(
+            Formatters.currency(rent.amount),
+            style: AppTextStyles.display.copyWith(fontSize: 36),
+          ),
           const SizedBox(height: AppSpacing.xs),
-          Text('Due by ${Formatters.date(rent.dueDate)}', style: AppTextStyles.bodySmall.copyWith(color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary)),
+          Text(
+            'Due by ${Formatters.date(rent.dueDate)}',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: isDark
+                  ? AppColors.darkTextTertiary
+                  : AppColors.lightTextTertiary,
+            ),
+          ),
           if (rent.breakdown != null) ...[
             const SizedBox(height: AppSpacing.lg),
             const Divider(),
@@ -158,7 +208,8 @@ class _CurrentRentCard extends StatelessWidget {
             _BreakdownRow('Electricity', rent.breakdown!.electricity),
             _BreakdownRow('Water', rent.breakdown!.water),
             _BreakdownRow('Maintenance', rent.breakdown!.maintenance),
-            if (rent.breakdown!.other != null) _BreakdownRow('Other', rent.breakdown!.other!),
+            if (rent.breakdown!.other != null)
+              _BreakdownRow('Other', rent.breakdown!.other!),
           ],
         ],
       ),
@@ -179,7 +230,12 @@ class _BreakdownRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: AppTextStyles.bodySmall),
-          Text(Formatters.currency(amount), style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w600)),
+          Text(
+            Formatters.currency(amount),
+            style: AppTextStyles.bodySmall.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -197,14 +253,23 @@ class _PaymentTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44, height: 44,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
-              color: (payment.status == RentStatus.paid ? AppColors.success : AppColors.warning).withValues(alpha: 0.12),
+              color:
+                  (payment.status == RentStatus.paid
+                          ? AppColors.success
+                          : AppColors.warning)
+                      .withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
             ),
             child: Icon(
-              payment.status == RentStatus.paid ? Icons.check_circle_outline : Icons.pending_outlined,
-              color: payment.status == RentStatus.paid ? AppColors.success : AppColors.warning,
+              payment.status == RentStatus.paid
+                  ? Icons.check_circle_outline
+                  : Icons.pending_outlined,
+              color: payment.status == RentStatus.paid
+                  ? AppColors.success
+                  : AppColors.warning,
             ),
           ),
           const SizedBox(width: AppSpacing.md),
@@ -212,15 +277,29 @@ class _PaymentTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(payment.month, style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600)),
                 Text(
-                  payment.paidDate != null ? 'Paid on ${Formatters.date(payment.paidDate!)}' : 'Due ${Formatters.date(payment.dueDate)}',
-                  style: AppTextStyles.caption.copyWith(color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary),
+                  payment.month,
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  payment.paidDate != null
+                      ? 'Paid on ${Formatters.date(payment.paidDate!)}'
+                      : 'Due ${Formatters.date(payment.dueDate)}',
+                  style: AppTextStyles.caption.copyWith(
+                    color: isDark
+                        ? AppColors.darkTextTertiary
+                        : AppColors.lightTextTertiary,
+                  ),
                 ),
               ],
             ),
           ),
-          Text(Formatters.currency(payment.amount), style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w700)),
+          Text(
+            Formatters.currency(payment.amount),
+            style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w700),
+          ),
         ],
       ),
     );

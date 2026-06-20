@@ -12,3 +12,15 @@ class ThemeNotifier extends StateNotifier<bool> {
 final themeProvider = StateNotifierProvider<ThemeNotifier, bool>((ref) {
   return ThemeNotifier();
 });
+
+/// Performance mode state provider — controls high-performance (no blur/reduced animations) toggle.
+class PerformanceModeNotifier extends StateNotifier<bool> {
+  PerformanceModeNotifier() : super(true); // true = Performance Mode active (smooth, static fallbacks) by default
+
+  void toggle() => state = !state;
+  void setEnabled(bool value) => state = value;
+}
+
+final performanceModeProvider = StateNotifierProvider<PerformanceModeNotifier, bool>((ref) {
+  return PerformanceModeNotifier();
+});

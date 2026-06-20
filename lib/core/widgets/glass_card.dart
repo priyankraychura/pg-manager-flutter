@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../theme/app_spacing.dart';
 import 'glass_container.dart';
+import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// A glassmorphic card with optional icon, title, subtitle, and tap handler.
 /// Commonly used on the dashboard and feature screens.
-class GlassCard extends StatelessWidget {
+class GlassCard extends ConsumerWidget {
   final Widget child;
   final VoidCallback? onTap;
   final EdgeInsetsGeometry? padding;
@@ -82,7 +84,9 @@ class GlassCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final perfMode = ref.watch(performanceModeProvider);
+
     Widget card = GlassContainer(
       onTap: onTap,
       padding: padding ?? const EdgeInsets.all(AppSpacing.lg),
@@ -91,7 +95,8 @@ class GlassCard extends StatelessWidget {
       child: child,
     );
 
-    if (animate) {
+    // Skip slide/fade animations when performance mode is active
+    if (animate && !perfMode) {
       card = card
           .animate()
           .fadeIn(duration: 400.ms, curve: Curves.easeOut)

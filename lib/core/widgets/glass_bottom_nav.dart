@@ -1,11 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../../features/settings/presentation/providers/settings_provider.dart';
 
 /// Glassmorphic bottom navigation bar with animated indicator.
-class GlassBottomNav extends StatelessWidget {
+class GlassBottomNav extends ConsumerWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
   final List<GlassBottomNavItem> items;
@@ -18,8 +20,57 @@ class GlassBottomNav extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final perfMode = ref.watch(performanceModeProvider);
+
+    final Color navBgColor;
+    final Color navBorderColor;
+
+    if (perfMode) {
+      // Solid/highly opaque container fallback for better performance
+      navBgColor = isDark
+          ? AppColors.darkSurface.withValues(alpha: 0.95)
+          : AppColors.lightSurface.withValues(alpha: 0.95);
+      navBorderColor = isDark
+          ? AppColors.darkGlassBorder.withValues(alpha: 0.2)
+          : AppColors.lightGlassBorder.withValues(alpha: 0.3);
+    } else {
+      // Translucent container fill for frosted look
+      navBgColor = isDark
+          ? AppColors.darkGlassFill.withValues(alpha: 0.12)
+          : AppColors.lightGlassFill.withValues(alpha: 0.65);
+      navBorderColor = isDark
+          ? AppColors.darkGlassBorder.withValues(alpha: 0.15)
+          : AppColors.lightGlassBorder.withValues(alpha: 0.7);
+    }
+
+    Widget navWidget = Container(
+      height: 68,
+      decoration: BoxDecoration(
+        color: navBgColor,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: navBorderColor,
+          width: 1.0,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: items.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          final isSelected = index == currentIndex;
+
+          return _NavItem(
+            item: item,
+            isSelected: isSelected,
+            isDark: isDark,
+            onTap: () => onTap(index),
+          );
+        }).toList(),
+      ),
+    );
 
     return SafeArea(
       top: false,
@@ -37,42 +88,15 @@ class GlassBottomNav extends StatelessWidget {
             ),
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(
-              height: 68,
-              decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.darkGlassFill.withValues(alpha: 0.12)
-                    : AppColors.lightGlassFill.withValues(alpha: 0.65),
+        child: perfMode
+            ? navWidget
+            : ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  color: isDark
-                      ? AppColors.darkGlassBorder.withValues(alpha: 0.15)
-                      : AppColors.lightGlassBorder.withValues(alpha: 0.7),
-                  width: 1.0,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Limit blur to 10
+                  child: navWidget,
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: items.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final item = entry.value;
-                  final isSelected = index == currentIndex;
-
-                  return _NavItem(
-                    item: item,
-                    isSelected: isSelected,
-                    isDark: isDark,
-                    onTap: () => onTap(index),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -98,9 +122,11 @@ class _NavItem extends StatelessWidget {
         ? AppColors.darkTextTertiary
         : AppColors.lightTextTertiary;
 
-    return GestureDetector(
+    return InkResponse(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      radius: 28,
+      highlightColor: Colors.transparent,
+      splashColor: activeColor.withValues(alpha: 0.15),
       child: SizedBox(
         width: 64,
         child: Column(
@@ -108,7 +134,7 @@ class _NavItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 200),
               curve: Curves.easeInOut,
               padding: const EdgeInsets.symmetric(
                 horizontal: 12,
