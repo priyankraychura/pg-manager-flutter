@@ -68,6 +68,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   void _showFeedbackSheet(BuildContext context) {
     final commentController = TextEditingController();
     int rating = 0;
+    String selectedMeal = 'Breakfast';
+    final meals = ['Breakfast', 'Lunch', 'Dinner'];
 
     showCommonBottomSheet(
       context: context,
@@ -75,7 +77,40 @@ class _MenuPageState extends ConsumerState<MenuPage> {
       builder: (ctx, setState) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Rate this week\'s menu', style: AppTextStyles.inputLabel),
+          Text('Select Meal', style: AppTextStyles.inputLabel),
+          const SizedBox(height: AppSpacing.sm),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(ctx).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.03),
+              borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+            ),
+            padding: const EdgeInsets.all(4),
+            child: Row(
+              children: meals.map((meal) => Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() => selectedMeal = meal),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: selectedMeal == meal ? AppColors.primaryOrange : Colors.transparent,
+                      borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      meal,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: selectedMeal == meal ? Colors.white : (Theme.of(ctx).brightness == Brightness.dark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+                      ),
+                    ),
+                  ),
+                ),
+              )).toList(),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          Text('Rate this meal', style: AppTextStyles.inputLabel),
           const SizedBox(height: AppSpacing.md),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -156,10 +191,14 @@ class _MenuPageState extends ConsumerState<MenuPage> {
             title: 'Meal Menu',
             subtitle: '2-Week Rotating Menu • Week $currentWeek',
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppColors.primaryOrange,
-            child: const Icon(Icons.rate_review_outlined, color: Colors.white),
-            onPressed: () => _showFeedbackSheet(context),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 24.0, right: 8.0),
+            child: FloatingActionButton(
+              backgroundColor: Colors.amber,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: const Icon(Icons.star_rounded, color: Colors.white, size: 30),
+              onPressed: () => _showFeedbackSheet(context),
+            ),
           ),
           body: GradientBackground(
             child: CustomScrollView(
