@@ -76,7 +76,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Sign In',
+                          'Welcome',
                           style: AppTextStyles.h1.copyWith(
                             color: isDark
                                 ? AppColors.darkTextPrimary
@@ -235,7 +235,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           width: 72,
           height: 72,
           decoration: BoxDecoration(
-            gradient: AppColors.primaryGradient,
+            color: AppColors.primaryOrange,
             borderRadius: BorderRadius.circular(20), // Squircle-like smooth radius
             boxShadow: [
               BoxShadow(
