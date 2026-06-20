@@ -8,7 +8,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/widgets/glass_button.dart';
-import '../../../../core/widgets/glass_container.dart';
 import '../../../../core/widgets/glass_text_field.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../providers/auth_provider.dart';
@@ -55,24 +54,26 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Scaffold(
       body: GradientBackground(
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.screenPadding),
-            child: Column(
-              children: [
-                const SizedBox(height: 40),
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenPadding,
+                vertical: AppSpacing.xl,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Logo & Welcome
+                  _buildHeader(isDark),
+                  
+                  const SizedBox(height: AppSpacing.xxl),
 
-                // Logo & Welcome
-                _buildHeader(isDark),
-
-                const SizedBox(height: 40),
-
-                // Login Form
-                GlassContainer(
-                  padding: const EdgeInsets.all(AppSpacing.xxl),
-                  child: Form(
+                  // Login Form
+                  Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
                           'Sign In',
@@ -81,6 +82,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ? AppColors.darkTextPrimary
                                 : AppColors.lightTextPrimary,
                           ),
+                          textAlign: TextAlign.start,
                         ),
                         const SizedBox(height: AppSpacing.xs),
                         Text(
@@ -90,8 +92,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ? AppColors.darkTextSecondary
                                 : AppColors.lightTextSecondary,
                           ),
+                          textAlign: TextAlign.start,
                         ),
-                        const SizedBox(height: AppSpacing.xxl),
+                        const SizedBox(height: AppSpacing.xl),
 
                         // Email
                         GlassTextField(
@@ -103,7 +106,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           textInputAction: TextInputAction.next,
                           validator: Validators.email,
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.md),
 
                         // Password
                         GlassTextField(
@@ -126,20 +129,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.sm),
+                        const SizedBox(height: AppSpacing.xs),
 
                         // Forgot Password
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () => context.push('/forgot-password'),
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(0, 30),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             child: const Text('Forgot Password?'),
                           ),
                         ),
 
                         // Error message
                         if (authState.error != null) ...[
-                          const SizedBox(height: AppSpacing.sm),
+                          const SizedBox(height: AppSpacing.md),
                           Container(
                             padding: const EdgeInsets.all(AppSpacing.md),
                             decoration: BoxDecoration(
@@ -169,7 +177,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                         ],
 
-                        const SizedBox(height: AppSpacing.xxl),
+                        const SizedBox(height: AppSpacing.xl),
 
                         // Login Button
                         GlassButton(
@@ -179,38 +187,38 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                       ],
                     ),
-                  ),
-                ).animate()
-                    .fadeIn(duration: 600.ms)
-                    .slideY(begin: 0.1, end: 0),
+                  ).animate()
+                      .fadeIn(duration: 600.ms)
+                      .slideY(begin: 0.05, end: 0),
 
-                const SizedBox(height: AppSpacing.xxl),
+                  const SizedBox(height: AppSpacing.xxl),
 
-                // Register Link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: AppTextStyles.body.copyWith(
-                        color: isDark
-                            ? AppColors.darkTextSecondary
-                            : AppColors.lightTextSecondary,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => context.push('/register'),
-                      child: Text(
-                        'Sign Up',
+                  // Register Link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account? ",
                         style: AppTextStyles.body.copyWith(
-                          color: AppColors.primaryOrange,
-                          fontWeight: FontWeight.w700,
+                          color: isDark
+                              ? AppColors.darkTextSecondary
+                              : AppColors.lightTextSecondary,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      GestureDetector(
+                        onTap: () => context.push('/register'),
+                        child: Text(
+                          'Sign Up',
+                          style: AppTextStyles.body.copyWith(
+                            color: AppColors.primaryOrange,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -220,33 +228,34 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   Widget _buildHeader(bool isDark) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // App Icon
         Container(
-          width: 84,
-          height: 84,
+          width: 72,
+          height: 72,
           decoration: BoxDecoration(
             gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.circular(24), // Squircle-like smooth radius
+            borderRadius: BorderRadius.circular(20), // Squircle-like smooth radius
             boxShadow: [
               BoxShadow(
                 color: AppColors.primaryOrange.withValues(alpha: 0.25),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
           child: const Icon(
             Icons.apartment_rounded, // Premium building logo
             color: Colors.white,
-            size: 42,
+            size: 36,
           ),
         )
             .animate()
             .scale(duration: 600.ms, curve: Curves.elasticOut)
             .fadeIn(),
 
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: AppSpacing.md),
 
         Text(
           'PG Manager',
@@ -254,6 +263,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             color: isDark
                 ? AppColors.darkTextPrimary
                 : AppColors.lightTextPrimary,
+            fontSize: 32,
           ),
         ).animate().fadeIn(delay: 200.ms, duration: 500.ms),
 
