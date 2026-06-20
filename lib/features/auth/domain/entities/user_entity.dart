@@ -11,6 +11,8 @@ class UserEntity {
   final String? emergencyContact;
   final String? emergencyContactName;
   final String? address;
+  final String? kycStatus;
+  final String? policeVerificationStatus;
 
   const UserEntity({
     required this.id,
@@ -24,6 +26,8 @@ class UserEntity {
     this.emergencyContact,
     this.emergencyContactName,
     this.address,
+    this.kycStatus,
+    this.policeVerificationStatus,
   });
 
   UserEntity copyWith({
@@ -37,6 +41,8 @@ class UserEntity {
     String? emergencyContact,
     String? emergencyContactName,
     String? address,
+    String? kycStatus,
+    String? policeVerificationStatus,
   }) {
     return UserEntity(
       id: id,
@@ -50,6 +56,8 @@ class UserEntity {
       emergencyContact: emergencyContact ?? this.emergencyContact,
       emergencyContactName: emergencyContactName ?? this.emergencyContactName,
       address: address ?? this.address,
+      kycStatus: kycStatus ?? this.kycStatus,
+      policeVerificationStatus: policeVerificationStatus ?? this.policeVerificationStatus,
     );
   }
 }

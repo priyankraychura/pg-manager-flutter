@@ -15,6 +15,8 @@ class UserModel extends UserEntity {
     super.emergencyContact,
     super.emergencyContactName,
     super.address,
+    super.kycStatus,
+    super.policeVerificationStatus,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,8 @@ class UserModel extends UserEntity {
       emergencyContact: json['emergencyContact'] as String?,
       emergencyContactName: json['emergencyContactName'] as String?,
       address: json['address'] as String?,
+      kycStatus: json['kycStatus'] as String?,
+      policeVerificationStatus: json['policeVerificationStatus'] as String?,
     );
   }
 
@@ -48,6 +52,8 @@ class UserModel extends UserEntity {
       'emergencyContact': emergencyContact,
       'emergencyContactName': emergencyContactName,
       'address': address,
+      'kycStatus': kycStatus,
+      'policeVerificationStatus': policeVerificationStatus,
     };
   }
 
@@ -64,6 +70,8 @@ class UserModel extends UserEntity {
       emergencyContact: entity.emergencyContact,
       emergencyContactName: entity.emergencyContactName,
       address: entity.address,
+      kycStatus: entity.kycStatus,
+      policeVerificationStatus: entity.policeVerificationStatus,
     );
   }
 }

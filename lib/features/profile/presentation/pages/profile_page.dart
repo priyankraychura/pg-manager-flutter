@@ -222,6 +222,38 @@ class ProfilePage extends ConsumerWidget {
 
             const SizedBox(height: AppSpacing.xl),
 
+            // Verification Card
+            GlassContainer(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Verification Status',
+                    style: AppTextStyles.h3.copyWith(
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.lg),
+                  _VerificationRow(
+                    icon: Icons.badge_outlined,
+                    label: 'KYC Document',
+                    status: user.kycStatus ?? 'Not Uploaded',
+                  ),
+                  const Divider(height: 24, thickness: 0.5),
+                  _VerificationRow(
+                    icon: Icons.local_police_outlined,
+                    label: 'Police Verification',
+                    status: user.policeVerificationStatus ?? 'Unverified',
+                  ),
+                ],
+              ),
+            ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.05, end: 0),
+
+            const SizedBox(height: AppSpacing.xl),
+
             // Quick Links
             GlassCard.info(
               icon: Icons.logout_outlined,
@@ -320,6 +352,86 @@ class _InfoRow extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _VerificationRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String status;
+
+  const _VerificationRow({
+    required this.icon,
+    required this.label,
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    Color statusColor;
+
+    switch (status.toLowerCase()) {
+      case 'verified':
+        statusColor = AppColors.success;
+        break;
+      case 'pending':
+        statusColor = AppColors.warning;
+        break;
+      case 'rejected':
+      case 'unverified':
+        statusColor = AppColors.error;
+        break;
+      case 'not uploaded':
+      default:
+        statusColor = AppColors.secondarySlate;
+    }
+
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.primaryOrange.withValues(alpha: isDark ? 0.12 : 0.08),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: AppColors.primaryOrange.withValues(alpha: 0.2),
+              width: 1,
+            ),
+          ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: AppColors.primaryOrange,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: Text(
+            label,
+            style: AppTextStyles.body.copyWith(
+              fontWeight: FontWeight.w600,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: statusColor.withValues(alpha: isDark ? 0.2 : 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            status,
+            style: AppTextStyles.caption.copyWith(
+              color: statusColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],
