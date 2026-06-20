@@ -329,12 +329,6 @@ class _QuickActionsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      _QuickAction(
-        Icons.payment_outlined,
-        'Rent',
-        AppColors.primaryOrange,
-        '/rent',
-      ),
       _QuickAction(Icons.wifi_outlined, 'WiFi', AppColors.info, '/wifi'),
       _QuickAction(
         Icons.restaurant_menu_outlined,
@@ -342,7 +336,6 @@ class _QuickActionsGrid extends StatelessWidget {
         AppColors.warning,
         '/menu',
       ),
-      _QuickAction(Icons.bed_outlined, 'Room', AppColors.success, '/room'),
       _QuickAction(
         Icons.report_problem_outlined,
         'Complaints',
@@ -356,18 +349,6 @@ class _QuickActionsGrid extends StatelessWidget {
         AppColors.info,
         '/notices',
       ),
-      _QuickAction(
-        Icons.logout_outlined,
-        'Leave',
-        AppColors.accentTeal,
-        '/leave-notice',
-      ),
-      _QuickAction(
-        Icons.settings_outlined,
-        'Settings',
-        AppColors.lightTextTertiary,
-        '/settings',
-      ),
     ];
 
     return GridView.builder(
@@ -377,7 +358,7 @@ class _QuickActionsGrid extends StatelessWidget {
         crossAxisCount: 4,
         mainAxisSpacing: AppSpacing.md,
         crossAxisSpacing: AppSpacing.md,
-        childAspectRatio: 0.85,
+        childAspectRatio: 0.75,
       ),
       itemCount: actions.length,
       itemBuilder: (context, index) {
@@ -390,22 +371,22 @@ class _QuickActionsGrid extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        width: 52,
-                        height: 52,
+                        width: 64,
+                        height: 64,
                         decoration: BoxDecoration(
                           color: action.color.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusLg,
                           ),
                         ),
-                        child: Icon(action.icon, color: action.color, size: 26),
+                        child: Icon(action.icon, color: action.color, size: 32),
                       ),
                       if (action.badge != null)
                         Positioned(
                           right: 0,
                           top: 0,
                           child: Container(
-                            padding: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(5),
                             decoration: const BoxDecoration(
                               color: AppColors.error,
                               shape: BoxShape.circle,
@@ -414,7 +395,7 @@ class _QuickActionsGrid extends StatelessWidget {
                               action.badge!,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 9,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -422,11 +403,11 @@ class _QuickActionsGrid extends StatelessWidget {
                         ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.xs),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     action.label,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: FontWeight.w500,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
