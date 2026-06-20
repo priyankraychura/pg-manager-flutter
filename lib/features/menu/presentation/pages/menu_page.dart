@@ -9,6 +9,9 @@ import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../../../../core/widgets/common_loader.dart';
+import '../../../../core/widgets/common_bottom_sheet.dart';
+import '../../../../core/widgets/glass_text_field.dart';
+import '../../../../core/widgets/glass_button.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/meal_entity.dart';
 import '../../domain/repositories/menu_repository.dart';
@@ -62,6 +65,64 @@ class _MenuPageState extends ConsumerState<MenuPage> {
     );
   }
 
+  void _showFeedbackSheet(BuildContext context) {
+    final commentController = TextEditingController();
+    int rating = 0;
+
+    showCommonBottomSheet(
+      context: context,
+      title: 'Menu Feedback',
+      builder: (ctx, setState) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Rate this week\'s menu', style: AppTextStyles.inputLabel),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, (index) {
+              return IconButton(
+                icon: Icon(
+                  index < rating ? Icons.star_rounded : Icons.star_outline_rounded,
+                  color: AppColors.primaryOrange,
+                  size: 36,
+                ),
+                onPressed: () => setState(() => rating = index + 1),
+              );
+            }),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          GlassTextField(
+            controller: commentController,
+            label: 'Comments (Optional)',
+            hint: 'Tell us what you liked or how we can improve',
+            maxLines: 3,
+          ),
+          const SizedBox(height: AppSpacing.xxl),
+          GlassButton(
+            label: 'Submit Feedback',
+            onPressed: () {
+              if (rating == 0) {
+                 ScaffoldMessenger.of(context).showSnackBar(
+                   const SnackBar(content: Text('Please provide a rating'), backgroundColor: AppColors.warning, behavior: SnackBarBehavior.floating),
+                 );
+                 return;
+              }
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Thank you for your feedback!'),
+                  backgroundColor: AppColors.success,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final menuAsync = ref.watch(menuProvider);
@@ -94,6 +155,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           appBar: GlassAppBar(
             title: 'Meal Menu',
             subtitle: '2-Week Rotating Menu • Week $currentWeek',
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: AppColors.primaryOrange,
+            child: const Icon(Icons.rate_review_outlined, color: Colors.white),
+            onPressed: () => _showFeedbackSheet(context),
           ),
           body: GradientBackground(
             child: CustomScrollView(

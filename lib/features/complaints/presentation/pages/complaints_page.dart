@@ -12,6 +12,7 @@ import '../../../../core/widgets/glass_text_field.dart';
 import '../../../../core/widgets/gradient_background.dart';
 import '../../../../core/widgets/status_badge.dart';
 import '../../../../core/widgets/empty_state.dart';
+import '../../../../core/widgets/common_bottom_sheet.dart';
 import '../../../../core/widgets/common_loader.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/complaint_entity.dart';
@@ -124,70 +125,53 @@ class ComplaintsPage extends ConsumerWidget {
     final descController = TextEditingController();
     var selectedCategory = ComplaintCategory.maintenance;
 
-    showModalBottomSheet(
+    showCommonBottomSheet(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => StatefulBuilder(
-        builder: (context, setState) => Container(
-          padding: EdgeInsets.fromLTRB(AppSpacing.xxl, AppSpacing.xxl, AppSpacing.xxl, MediaQuery.of(ctx).viewInsets.bottom + AppSpacing.xxl),
-          decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark ? AppColors.darkSurface : Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2)))),
-                const SizedBox(height: AppSpacing.xxl),
-                Text('Raise Complaint', style: AppTextStyles.h2),
-                const SizedBox(height: AppSpacing.xxl),
-                GlassTextField(controller: titleController, label: 'Title', hint: 'Brief description of the issue'),
-                const SizedBox(height: AppSpacing.lg),
-                Text('Category', style: AppTextStyles.inputLabel),
-                const SizedBox(height: AppSpacing.sm),
-                Wrap(
-                  spacing: 8, runSpacing: 8,
-                  children: ComplaintCategory.values.map((cat) => GestureDetector(
-                    onTap: () => setState(() => selectedCategory = cat),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: selectedCategory == cat ? AppColors.primaryOrange : Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: selectedCategory == cat ? AppColors.primaryOrange : Colors.grey.shade400),
-                      ),
-                      child: Text(cat.name, style: TextStyle(fontSize: 13, color: selectedCategory == cat ? Colors.white : null)),
-                    ),
-                  )).toList(),
+      title: 'Raise Complaint',
+      builder: (ctx, setState) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GlassTextField(controller: titleController, label: 'Title', hint: 'Brief description of the issue'),
+          const SizedBox(height: AppSpacing.lg),
+          Text('Category', style: AppTextStyles.inputLabel),
+          const SizedBox(height: AppSpacing.sm),
+          Wrap(
+            spacing: 8, runSpacing: 8,
+            children: ComplaintCategory.values.map((cat) => GestureDetector(
+              onTap: () => setState(() => selectedCategory = cat),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: selectedCategory == cat ? AppColors.primaryOrange : Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: selectedCategory == cat ? AppColors.primaryOrange : Colors.grey.shade400),
                 ),
-                const SizedBox(height: AppSpacing.lg),
-                GlassTextField(controller: descController, label: 'Description', hint: 'Describe the issue in detail', maxLines: 4),
-                const SizedBox(height: AppSpacing.xxl),
-                GlassButton(
-                  label: 'Submit Complaint',
-                  onPressed: () async {
-                    if (titleController.text.isEmpty) return;
-                    await getIt<ComplaintsRepository>().raiseComplaint(
-                      title: titleController.text,
-                      description: descController.text,
-                      category: selectedCategory,
-                    );
-                    if (ctx.mounted) {
-                      Navigator.pop(ctx);
-                      ref.invalidate(complaintsProvider);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: const Text('Complaint submitted!'), backgroundColor: AppColors.success, behavior: SnackBarBehavior.floating, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
+                child: Text(cat.name, style: TextStyle(fontSize: 13, color: selectedCategory == cat ? Colors.white : null)),
+              ),
+            )).toList(),
           ),
-        ),
+          const SizedBox(height: AppSpacing.lg),
+          GlassTextField(controller: descController, label: 'Description', hint: 'Describe the issue in detail', maxLines: 4),
+          const SizedBox(height: AppSpacing.xxl),
+          GlassButton(
+            label: 'Submit Complaint',
+            onPressed: () async {
+              if (titleController.text.isEmpty) return;
+              await getIt<ComplaintsRepository>().raiseComplaint(
+                title: titleController.text,
+                description: descController.text,
+                category: selectedCategory,
+              );
+              if (ctx.mounted) {
+                Navigator.pop(ctx);
+                ref.invalidate(complaintsProvider);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: const Text('Complaint submitted!'), backgroundColor: AppColors.success, behavior: SnackBarBehavior.floating, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
