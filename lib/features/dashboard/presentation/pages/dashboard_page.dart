@@ -74,7 +74,7 @@ class DashboardPage extends ConsumerWidget {
                       ).animate().fadeIn(duration: 500.ms),
                     ),
                     GestureDetector(
-                      onTap: () => context.push('/profile'),
+                      onTap: () => context.push('/notices'),
                       child: Container(
                         width: 48,
                         height: 48,
@@ -84,14 +84,11 @@ class DashboardPage extends ConsumerWidget {
                             AppSpacing.radiusLg,
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            (authState.user?.name ?? data.tenantName)
-                                .substring(0, 1)
-                                .toUpperCase(),
-                            style: AppTextStyles.h2.copyWith(
-                              color: Colors.white,
-                            ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.notifications_outlined,
+                            color: Colors.white,
+                            size: 24,
                           ),
                         ),
                       ).animate().scale(
