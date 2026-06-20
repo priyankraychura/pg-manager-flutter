@@ -82,58 +82,152 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
           error: (e, _) => Center(child: Text('Error: $e')),
           data: (notice) {
             if (notice != null) return _ExistingNotice(notice: notice, isDark: isDark);
+            
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.screenPadding),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding, vertical: AppSpacing.xl),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    width: 80, height: 80,
-                    decoration: BoxDecoration(color: AppColors.accentTeal.withValues(alpha: 0.12), shape: BoxShape.circle),
-                    child: const Icon(Icons.exit_to_app_rounded, size: 40, color: AppColors.accentTeal),
-                  ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+                  // Hero Header
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(AppSpacing.xl),
+                      decoration: BoxDecoration(
+                        color: AppColors.accentTeal.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.accentTeal.withValues(alpha: 0.2),
+                            blurRadius: 30,
+                            spreadRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: const Icon(Icons.flight_takeoff_rounded, size: 56, color: AppColors.accentTeal),
+                    ).animate().scale(duration: 600.ms, curve: Curves.easeOutBack).fadeIn(),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  
+                  Text(
+                    'Plan Your Move',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.h1.copyWith(
+                      color: isDark ? Colors.white : Colors.black87,
+                      letterSpacing: -0.5,
+                    ),
+                  ).animate().slideY(begin: 0.2, duration: 500.ms).fadeIn(),
+                  
+                  const SizedBox(height: AppSpacing.xs),
+                  
+                  Text(
+                    'Provide at least 1 month advance notice before vacating the premises.',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.body.copyWith(
+                      color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                      height: 1.4,
+                    ),
+                  ).animate().slideY(begin: 0.2, duration: 500.ms, delay: 100.ms).fadeIn(),
 
                   const SizedBox(height: AppSpacing.xxl),
 
+                  // Sleek Form Card
                   GlassContainer(
-                    padding: const EdgeInsets.all(AppSpacing.xxl),
+                    padding: const EdgeInsets.all(AppSpacing.xl),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Submit Leave Notice', style: AppTextStyles.h2),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text('Provide at least 1 month advance notice before vacating.', style: AppTextStyles.body.copyWith(color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary)),
-                        const SizedBox(height: AppSpacing.xxl),
-
                         Text('Intended Leave Date', style: AppTextStyles.inputLabel),
                         const SizedBox(height: AppSpacing.sm),
+                        
+                        // Enhanced Date Picker
                         GestureDetector(
                           onTap: _selectDate,
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: 200.ms,
                             width: double.infinity,
-                            padding: const EdgeInsets.all(AppSpacing.lg),
+                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
                             decoration: BoxDecoration(
-                              color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.05),
+                              color: _selectedDate != null 
+                                  ? AppColors.accentTeal.withValues(alpha: 0.1)
+                                  : (isDark ? Colors.white : Colors.black).withValues(alpha: 0.05),
                               borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                              border: Border.all(color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1)),
+                              border: Border.all(
+                                color: _selectedDate != null 
+                                    ? AppColors.accentTeal.withValues(alpha: 0.5)
+                                    : (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1),
+                              ),
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.calendar_today_outlined, size: 20),
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: _selectedDate != null 
+                                        ? AppColors.accentTeal.withValues(alpha: 0.2)
+                                        : (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Icon(
+                                    Icons.event_available_rounded, 
+                                    size: 24,
+                                    color: _selectedDate != null 
+                                        ? AppColors.accentTeal
+                                        : (isDark ? Colors.white70 : Colors.black54),
+                                  ),
+                                ),
                                 const SizedBox(width: AppSpacing.md),
-                                Text(_selectedDate != null ? Formatters.date(_selectedDate!) : 'Select date', style: AppTextStyles.bodyLarge),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _selectedDate != null ? 'Selected Date' : 'Choose a Date',
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        _selectedDate != null ? Formatters.date(_selectedDate!) : 'Tap to select', 
+                                        style: AppTextStyles.bodyLarge.copyWith(
+                                          fontWeight: _selectedDate != null ? FontWeight.w600 : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                if (_selectedDate == null)
+                                  Icon(Icons.chevron_right_rounded, color: isDark ? Colors.white54 : Colors.black54),
                               ],
                             ),
                           ),
                         ),
 
-                        const SizedBox(height: AppSpacing.lg),
-                        GlassTextField(controller: _reasonController, label: 'Reason', hint: 'Why are you leaving?', maxLines: 3),
+                        const SizedBox(height: AppSpacing.xl),
+                        
+                        GlassTextField(
+                          controller: _reasonController, 
+                          label: 'Reason for Leaving', 
+                          hint: 'Please briefly explain why you are leaving...', 
+                          maxLines: 4,
+                        ),
 
                         const SizedBox(height: AppSpacing.xxl),
-                        GlassButton(label: 'Submit Notice', isLoading: _isSubmitting, color: AppColors.accentTeal, onPressed: _submit),
+                        
+                        // Floating Action Style Button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: GlassButton(
+                            label: 'Submit Notice', 
+                            isLoading: _isSubmitting, 
+                            color: AppColors.accentTeal, 
+                            onPressed: _submit,
+                          ),
+                        ),
                       ],
                     ),
-                  ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.05, end: 0),
+                  ).animate().slideY(begin: 0.1, duration: 600.ms, delay: 200.ms).fadeIn(),
                 ],
               ),
             );
@@ -147,47 +241,171 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
 class _ExistingNotice extends StatelessWidget {
   final LeaveNoticeEntity notice;
   final bool isDark;
+  
   const _ExistingNotice({required this.notice, required this.isDark});
 
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSpacing.screenPadding),
-      child: GlassContainer(
-        padding: const EdgeInsets.all(AppSpacing.xxl),
-        child: Column(
-          children: [
-            const Icon(Icons.check_circle_outline, size: 60, color: AppColors.success),
-            const SizedBox(height: AppSpacing.lg),
-            Text('Notice Submitted', style: AppTextStyles.h1),
-            const SizedBox(height: AppSpacing.xxl),
-            _Row('Status', notice.status.name.toUpperCase()),
-            _Row('Submitted', Formatters.date(notice.submittedDate)),
-            _Row('Leave Date', Formatters.date(notice.intendedLeaveDate)),
-            _Row('Reason', notice.reason),
-          ],
-        ),
-      ).animate().fadeIn(duration: 500.ms),
-    );
+  Color _getStatusColor() {
+    switch (notice.status) {
+      case LeaveNoticeStatus.pending:
+        return AppColors.warning;
+      case LeaveNoticeStatus.approved:
+        return AppColors.success;
+      case LeaveNoticeStatus.rejected:
+        return AppColors.error;
+    }
   }
-}
 
-class _Row extends StatelessWidget {
-  final String label;
-  final String value;
-  const _Row(this.label, this.value);
+  IconData _getStatusIcon() {
+    switch (notice.status) {
+      case LeaveNoticeStatus.pending:
+        return Icons.hourglass_top_rounded;
+      case LeaveNoticeStatus.approved:
+        return Icons.check_circle_rounded;
+      case LeaveNoticeStatus.rejected:
+        return Icons.cancel_rounded;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    final statusColor = _getStatusColor();
+    
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding, vertical: AppSpacing.xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(width: 100, child: Text(label, style: AppTextStyles.bodySmall.copyWith(color: Colors.grey))),
-          Expanded(child: Text(value, style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500))),
+          // Status Hero
+          Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: statusColor.withValues(alpha: 0.15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: statusColor.withValues(alpha: 0.2),
+                        blurRadius: 40,
+                        spreadRadius: 10,
+                      ),
+                    ],
+                  ),
+                ).animate(onPlay: (controller) => controller.repeat()).shimmer(duration: 2000.ms, color: statusColor.withValues(alpha: 0.3)),
+                Icon(_getStatusIcon(), size: 64, color: statusColor)
+                    .animate()
+                    .scale(duration: 500.ms, curve: Curves.easeOutBack),
+              ],
+            ),
+          ),
+          
+          const SizedBox(height: AppSpacing.xl),
+          
+          Text(
+            'Notice ${notice.status.name.toUpperCase()}',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.h1.copyWith(
+              color: statusColor,
+              letterSpacing: 1,
+            ),
+          ).animate().slideY(begin: 0.2).fadeIn(duration: 500.ms),
+          
+          const SizedBox(height: AppSpacing.xxl),
+          
+          // Info Grid/Cards
+          GlassContainer(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            child: Column(
+              children: [
+                _buildInfoCard(
+                  context,
+                  title: 'Leave Date',
+                  value: Formatters.date(notice.intendedLeaveDate),
+                  icon: Icons.event_available_rounded,
+                  isDark: isDark,
+                  isHighlighted: true,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Divider(height: 1, color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1)),
+                const SizedBox(height: AppSpacing.md),
+                _buildInfoCard(
+                  context,
+                  title: 'Submitted On',
+                  value: Formatters.date(notice.submittedDate),
+                  icon: Icons.history_rounded,
+                  isDark: isDark,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Divider(height: 1, color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1)),
+                const SizedBox(height: AppSpacing.md),
+                _buildInfoCard(
+                  context,
+                  title: 'Reason',
+                  value: notice.reason,
+                  icon: Icons.subject_rounded,
+                  isDark: isDark,
+                  isMultiline: true,
+                ),
+              ],
+            ),
+          ).animate().slideY(begin: 0.1).fadeIn(duration: 600.ms, delay: 200.ms),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoCard(
+    BuildContext context, {
+    required String title,
+    required String value,
+    required IconData icon,
+    required bool isDark,
+    bool isHighlighted = false,
+    bool isMultiline = false,
+  }) {
+    return Row(
+      crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.05),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(
+            icon, 
+            size: 20, 
+            color: isHighlighted ? AppColors.accentTeal : (isDark ? Colors.white70 : Colors.black54),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: AppTextStyles.bodyLarge.copyWith(
+                  fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.normal,
+                  color: isHighlighted 
+                      ? (isDark ? Colors.white : Colors.black87)
+                      : (isDark ? Colors.white70 : Colors.black87),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
