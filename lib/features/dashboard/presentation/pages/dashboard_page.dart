@@ -78,7 +78,7 @@ class DashboardPage extends ConsumerWidget {
                         width: 48,
                         height: 48,
                         decoration: BoxDecoration(
-                          gradient: AppColors.primaryGradient,
+                          color: AppColors.primaryOrange,
                           borderRadius: BorderRadius.circular(
                             AppSpacing.radiusLg,
                           ),

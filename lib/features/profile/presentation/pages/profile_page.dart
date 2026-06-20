@@ -33,7 +33,7 @@ class ProfilePage extends ConsumerWidget {
             Container(
               width: AppSpacing.avatarXl, height: AppSpacing.avatarXl,
               decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
+                color: AppColors.primaryOrange,
                 shape: BoxShape.circle,
                 boxShadow: [BoxShadow(color: AppColors.primaryOrange.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 8))],
               ),
