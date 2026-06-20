@@ -102,20 +102,20 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: AppSpacing.xs),
                   
                   GlassContainer(
-                    padding: const EdgeInsets.all(AppSpacing.xl),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Personal Info',
-                          style: AppTextStyles.h2.copyWith(
+                          style: AppTextStyles.h3.copyWith(
                             color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
                         
                         // Full Name
                         GlassTextField(
@@ -123,10 +123,11 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           label: 'Full Name',
                           hint: 'Enter your name',
                           prefixIcon: Icons.person_outline_rounded,
+                          prefixIconColor: AppColors.primaryOrange,
                           validator: Validators.name,
                           textInputAction: TextInputAction.next,
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
 
                         // Phone Number
                         GlassTextField(
@@ -134,11 +135,12 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           label: 'Phone Number',
                           hint: 'Enter phone number',
                           prefixIcon: Icons.phone_outlined,
+                          prefixIconColor: AppColors.success,
                           keyboardType: TextInputType.phone,
                           validator: Validators.phone,
                           textInputAction: TextInputAction.next,
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
 
                         // Permanent Address
                         GlassTextField(
@@ -146,6 +148,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           label: 'Address',
                           hint: 'Enter permanent address',
                           prefixIcon: Icons.home_outlined,
+                          prefixIconColor: AppColors.secondarySlate,
                           maxLines: 2,
                           textInputAction: TextInputAction.next,
                         ),
@@ -153,20 +156,20 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     ),
                   ).animate().fadeIn(duration: 400.ms),
 
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: AppSpacing.sm),
 
                   GlassContainer(
-                    padding: const EdgeInsets.all(AppSpacing.xl),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Emergency Contact',
-                          style: AppTextStyles.h2.copyWith(
+                          style: AppTextStyles.h3.copyWith(
                             color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
 
                         // Emergency Contact Name
                         GlassTextField(
@@ -174,9 +177,10 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           label: 'Contact Name',
                           hint: 'Emergency contact name',
                           prefixIcon: Icons.contact_emergency_outlined,
+                          prefixIconColor: AppColors.warning,
                           textInputAction: TextInputAction.next,
                         ),
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
 
                         // Emergency Contact Phone
                         GlassTextField(
@@ -184,6 +188,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           label: 'Contact Phone',
                           hint: 'Emergency contact phone',
                           prefixIcon: Icons.phone_android_outlined,
+                          prefixIconColor: AppColors.error,
                           keyboardType: TextInputType.phone,
                           validator: (val) {
                             if (val != null && val.isNotEmpty) {
@@ -198,14 +203,14 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     ),
                   ).animate().fadeIn(delay: 150.ms, duration: 400.ms),
 
-                  const SizedBox(height: AppSpacing.xxl),
+                  const SizedBox(height: AppSpacing.xl),
 
                   GlassButton(
                     label: 'Save Changes',
                     onPressed: _saveProfile,
                   ).animate().fadeIn(delay: 300.ms, duration: 400.ms),
                   
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

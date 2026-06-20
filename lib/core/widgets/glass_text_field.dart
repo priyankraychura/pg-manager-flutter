@@ -12,6 +12,7 @@ class GlassTextField extends StatelessWidget {
   final String? hint;
   final String? errorText;
   final IconData? prefixIcon;
+  final Color? prefixIconColor;
   final Widget? suffixIcon;
   final bool obscureText;
   final TextInputType? keyboardType;
@@ -32,6 +33,7 @@ class GlassTextField extends StatelessWidget {
     this.hint,
     this.errorText,
     this.prefixIcon,
+    this.prefixIconColor,
     this.suffixIcon,
     this.obscureText = false,
     this.keyboardType,
@@ -49,6 +51,38 @@ class GlassTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    Widget? buildPrefixIcon() {
+      if (prefixIcon == null) return null;
+
+      if (prefixIconColor != null) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: prefixIconColor!.withValues(alpha: isDark ? 0.12 : 0.08),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: prefixIconColor!.withValues(alpha: 0.2),
+                width: 1,
+              ),
+            ),
+            child: Icon(
+              prefixIcon,
+              size: 18,
+              color: prefixIconColor,
+            ),
+          ),
+        );
+      }
+
+      return Icon(
+        prefixIcon,
+        size: AppSpacing.iconMd,
+        color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,15 +120,7 @@ class GlassTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             errorText: errorText,
-            prefixIcon: prefixIcon != null
-                ? Icon(
-                    prefixIcon,
-                    size: AppSpacing.iconMd,
-                    color: isDark
-                        ? AppColors.darkTextTertiary
-                        : AppColors.lightTextTertiary,
-                  )
-                : null,
+            prefixIcon: buildPrefixIcon(),
             suffixIcon: suffixIcon,
           ),
         ),
