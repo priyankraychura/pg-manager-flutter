@@ -27,12 +27,39 @@ class MenuPage extends ConsumerStatefulWidget {
 class _MenuPageState extends ConsumerState<MenuPage> {
   int _selectedDay = 0;
   int _selectedWeek = 0;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _selectedDay = (DateTime.now().day % 14);
     _selectedWeek = _selectedDay < 7 ? 0 : 1;
+
+    final indexInWeek = _selectedDay % 7;
+    double offset = (indexInWeek * 76.0) - 130.0;
+    if (offset < 0) offset = 0;
+    _scrollController = ScrollController(initialScrollOffset: offset);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToSelected() {
+    if (!_scrollController.hasClients) return;
+    final indexInWeek = _selectedDay % 7;
+    double offset = (indexInWeek * 76.0) - 130.0;
+    if (offset < 0) offset = 0;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    if (offset > maxScroll) offset = maxScroll;
+
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -90,6 +117,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                 _selectedWeek = 0;
                                 if (_selectedDay > 6) _selectedDay -= 7;
                               });
+                              _scrollToSelected();
                             },
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -116,6 +144,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                 _selectedWeek = 1;
                                 if (_selectedDay < 7) _selectedDay += 7;
                               });
+                              _scrollToSelected();
                             },
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -146,6 +175,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                 child: SizedBox(
                   height: 80,
                   child: ListView.builder(
+                    controller: _scrollController,
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding, vertical: AppSpacing.md),
                     itemCount: 7,
@@ -162,7 +192,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                         onTap: () => setState(() => _selectedDay = actualIndex),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          width: 68,
                           margin: const EdgeInsets.only(right: AppSpacing.sm),
                           decoration: BoxDecoration(
                             color: isSelected ? AppColors.primaryOrange : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.5)),
