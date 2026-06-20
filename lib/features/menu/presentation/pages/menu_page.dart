@@ -6,6 +6,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/glass_app_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
+import '../../../../core/widgets/gradient_background.dart';
 import '../../../../injection/service_locator.dart';
 import '../../domain/entities/meal_entity.dart';
 import '../../domain/repositories/menu_repository.dart';
@@ -37,32 +38,34 @@ class _MenuPageState extends ConsumerState<MenuPage> {
 
     return menuAsync.when(
       loading: () => const Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: GlassAppBar(
           title: 'Meal Menu',
           subtitle: 'Loading Menu...',
         ),
-        body: Center(child: CircularProgressIndicator()),
+        body: GradientBackground(
+          child: Center(child: CircularProgressIndicator()),
+        ),
       ),
       error: (e, _) => Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: const GlassAppBar(
           title: 'Meal Menu',
           subtitle: 'Error loading menu',
         ),
-        body: Center(child: Text('Error: $e')),
+        body: GradientBackground(
+          child: Center(child: Text('Error: $e')),
+        ),
       ),
       data: (meals) {
         final currentMeal = meals[_selectedDay];
         final currentWeek = _selectedDay < 7 ? 1 : 2;
 
         return Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: GlassAppBar(
             title: 'Meal Menu',
             subtitle: '2-Week Rotating Menu • Week $currentWeek',
           ),
-          body: CustomScrollView(
+          body: GradientBackground(
+            child: CustomScrollView(
             slivers: [
               // Day Selector
               SliverToBoxAdapter(
@@ -124,6 +127,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
+          ),
           ),
         );
       },
