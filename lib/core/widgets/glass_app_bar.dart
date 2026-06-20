@@ -31,7 +31,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(
-      AppSpacing.appBarHeight + (subtitle != null ? 14.0 : 0.0));
+      AppSpacing.appBarHeight + (subtitle != null ? 8.0 : 0.0));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +62,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         (showBackButton
             ? Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 16.0),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -73,36 +73,21 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           context.go('/dashboard');
                         }
                       },
-                      borderRadius: BorderRadius.circular(12),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
+                      borderRadius: BorderRadius.circular(100),
+                      child: Ink(
                         width: 38,
                         height: 38,
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.06)
-                              : Colors.black.withValues(alpha: 0.04),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.1)
-                                : Colors.black.withValues(alpha: 0.08),
-                            width: 1.0,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.04),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
                         ),
-                        child: Icon(
-                          Icons.chevron_left_rounded,
-                          size: 22,
-                          color: isDark
-                              ? AppColors.darkTextPrimary
-                              : AppColors.lightTextPrimary,
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            size: 18,
+                            color: isDark
+                                ? AppColors.darkTextPrimary
+                                : AppColors.lightTextPrimary,
+                          ),
                         ),
                       ),
                     ),
@@ -122,6 +107,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       child: AppBar(
+        toolbarHeight: preferredSize.height,
         title: Column(
           crossAxisAlignment:
               centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.start,
@@ -155,7 +141,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0,
         centerTitle: centerTitle,
         leading: leadingWidget,
-        leadingWidth: showBackButton ? 56 : null,
+        leadingWidth: showBackButton ? 64 : null,
         actions: actions?.map((w) {
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),

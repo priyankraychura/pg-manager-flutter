@@ -42,7 +42,7 @@ class AppSpacing {
   static const double buttonHeight = 52;
   static const double buttonHeightSmall = 40;
   static const double inputHeight = 56;
-  static const double appBarHeight = 60;
+  static const double appBarHeight = 56;
   static const double bottomNavHeight = 72;
   static const double cardMinHeight = 80;
 
