@@ -185,6 +185,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           isLoading: authState.isLoading,
                           onPressed: _handleLogin,
                         ),
+
+                        // DEV ONLY
+                        const SizedBox(height: AppSpacing.md),
+                        TextButton(
+                          onPressed: () => context.go('/dashboard'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primaryOrange,
+                          ),
+                          child: const Text('Dev Login (Bypass Auth)'),
+                        ),
                       ],
                     ),
                   ).animate()
