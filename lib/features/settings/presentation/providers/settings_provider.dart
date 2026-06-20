@@ -12,3 +12,14 @@ class ThemeNotifier extends StateNotifier<bool> {
 final themeProvider = StateNotifierProvider<ThemeNotifier, bool>((ref) {
   return ThemeNotifier();
 });
+
+/// Notifications state provider
+class NotificationsNotifier extends StateNotifier<bool> {
+  NotificationsNotifier() : super(true); // true = enabled (default)
+
+  void toggle() => state = !state;
+}
+
+final notificationsProvider = StateNotifierProvider<NotificationsNotifier, bool>((ref) {
+  return NotificationsNotifier();
+});

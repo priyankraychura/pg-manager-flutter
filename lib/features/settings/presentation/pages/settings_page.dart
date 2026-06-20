@@ -17,6 +17,7 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = ref.watch(themeProvider);
+    final isNotificationsEnabled = ref.watch(notificationsProvider);
 
     return Scaffold(
       appBar: const GlassAppBar(
@@ -31,20 +32,17 @@ class SettingsPage extends ConsumerWidget {
             children: [
               Text('Appearance', style: AppTextStyles.h3),
               const SizedBox(height: AppSpacing.md),
-              GlassCard(
-                animate: false,
-                child: Row(
-                  children: [
-                    Icon(Icons.dark_mode_outlined, color: AppColors.primaryOrange),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(child: Text('Dark Mode', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500))),
-                    Switch.adaptive(
-                      value: isDarkMode,
-                      activeThumbColor: AppColors.primaryOrange,
-                      onChanged: (_) => ref.read(themeProvider.notifier).toggle(),
-                    ),
-                  ],
+              GlassCard.info(
+                icon: Icons.dark_mode_outlined,
+                title: 'Dark Mode',
+                subtitle: 'Toggle application theme',
+                iconColor: AppColors.primaryOrange,
+                trailing: Switch.adaptive(
+                  value: isDarkMode,
+                  activeThumbColor: AppColors.primaryOrange,
+                  onChanged: (_) => ref.read(themeProvider.notifier).toggle(),
                 ),
+                animate: false,
               ),
 
 
@@ -57,7 +55,11 @@ class SettingsPage extends ConsumerWidget {
                 title: 'Notifications',
                 subtitle: 'Manage push notifications',
                 iconColor: AppColors.warning,
-                trailing: const Icon(Icons.chevron_right, size: 20),
+                trailing: Switch.adaptive(
+                  value: isNotificationsEnabled,
+                  activeThumbColor: AppColors.warning,
+                  onChanged: (_) => ref.read(notificationsProvider.notifier).toggle(),
+                ),
                 animate: false,
               ),
               GlassCard.info(
