@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -25,11 +26,13 @@ class MenuPage extends ConsumerStatefulWidget {
 
 class _MenuPageState extends ConsumerState<MenuPage> {
   int _selectedDay = 0;
+  int _selectedWeek = 0;
 
   @override
   void initState() {
     super.initState();
     _selectedDay = (DateTime.now().day % 14);
+    _selectedWeek = _selectedDay < 7 ? 0 : 1;
   }
 
   @override
@@ -58,7 +61,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
       ),
       data: (meals) {
         final currentMeal = meals[_selectedDay];
-        final currentWeek = _selectedDay < 7 ? 1 : 2;
+        final currentWeek = _selectedWeek + 1;
 
         return Scaffold(
           appBar: GlassAppBar(
@@ -68,6 +71,76 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           body: GradientBackground(
             child: CustomScrollView(
             slivers: [
+              // Week Toggle
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding, vertical: AppSpacing.sm),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.03),
+                      borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedWeek = 0;
+                                if (_selectedDay > 6) _selectedDay -= 7;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedWeek == 0 ? AppColors.primaryOrange : Colors.transparent,
+                                borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Week 1',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: _selectedWeek == 0 ? Colors.white : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedWeek = 1;
+                                if (_selectedDay < 7) _selectedDay += 7;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedWeek == 1 ? AppColors.primaryOrange : Colors.transparent,
+                                borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Week 2',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: _selectedWeek == 1 ? Colors.white : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               // Day Selector
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -75,17 +148,21 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding, vertical: AppSpacing.md),
-                    itemCount: meals.length,
+                    itemCount: 7,
                     itemBuilder: (context, index) {
-                      final meal = meals[index];
-                      final isSelected = index == _selectedDay;
-                      final isToday = index == (DateTime.now().day % 14);
+                      final actualIndex = _selectedWeek * 7 + index;
+                      final isSelected = actualIndex == _selectedDay;
+                      final todayIndex = DateTime.now().day % 14;
+                      final isToday = actualIndex == todayIndex;
+                      
+                      final difference = actualIndex - todayIndex;
+                      final mealDate = DateTime.now().add(Duration(days: difference));
 
                       return GestureDetector(
-                        onTap: () => setState(() => _selectedDay = index),
+                        onTap: () => setState(() => _selectedDay = actualIndex),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
-                          width: 52,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           margin: const EdgeInsets.only(right: AppSpacing.sm),
                           decoration: BoxDecoration(
                             color: isSelected ? AppColors.primaryOrange : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.5)),
@@ -96,12 +173,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                meal.dayName.substring(0, 3),
+                                DateFormat('E').format(mealDate),
                                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: isSelected ? Colors.white : (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary)),
                               ),
+                              const SizedBox(height: 2),
                               Text(
-                                'D${meal.dayNumber}',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: isSelected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary)),
+                                DateFormat('dd MMM').format(mealDate),
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: isSelected ? Colors.white : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary)),
                               ),
                             ],
                           ),
