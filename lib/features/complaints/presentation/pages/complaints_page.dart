@@ -47,7 +47,7 @@ class ComplaintsPage extends ConsumerWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 24.0, right: 8.0),
         child: FloatingActionButton(
-          backgroundColor: AppColors.primaryOrange,
+          backgroundColor: AppColors.error,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: const Icon(Icons.add_rounded, color: Colors.white, size: 30),
           onPressed: () => _showRaiseComplaintSheet(context, ref),
@@ -145,9 +145,9 @@ class ComplaintsPage extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: selectedCategory == cat ? AppColors.primaryOrange : Colors.transparent,
+                  color: selectedCategory == cat ? AppColors.error : Colors.transparent,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: selectedCategory == cat ? AppColors.primaryOrange : Colors.grey.shade400),
+                  border: Border.all(color: selectedCategory == cat ? AppColors.error : Colors.grey.shade400),
                 ),
                 child: Text(cat.name, style: TextStyle(fontSize: 13, color: selectedCategory == cat ? Colors.white : null)),
               ),
@@ -158,6 +158,7 @@ class ComplaintsPage extends ConsumerWidget {
           const SizedBox(height: AppSpacing.xxl),
           GlassButton(
             label: 'Submit Complaint',
+            color: AppColors.error,
             onPressed: () async {
               if (titleController.text.isEmpty) return;
               await getIt<ComplaintsRepository>().raiseComplaint(

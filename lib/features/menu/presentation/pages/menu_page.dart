@@ -93,7 +93,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: selectedMeal == meal ? const Color(0xFFEAB308) : Colors.transparent,
+                      color: selectedMeal == meal ? AppColors.warning : Colors.transparent,
                       borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                     ),
                     alignment: Alignment.center,
@@ -118,7 +118,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               return IconButton(
                 icon: Icon(
                   index < rating ? Icons.star_rounded : Icons.star_outline_rounded,
-                  color: const Color(0xFFEAB308),
+                  color: AppColors.warning,
                   size: 36,
                 ),
                 onPressed: () => setState(() => rating = index + 1),
@@ -135,7 +135,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           const SizedBox(height: AppSpacing.xxl),
           GlassButton(
             label: 'Submit Feedback',
-            color: const Color(0xFFEAB308),
+            color: AppColors.warning,
             onPressed: () {
               if (rating == 0) {
                  ScaffoldMessenger.of(context).showSnackBar(
@@ -195,7 +195,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 24.0, right: 8.0),
             child: FloatingActionButton(
-              backgroundColor: const Color(0xFFEAB308),
+              backgroundColor: AppColors.warning,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: const Icon(Icons.star_rounded, color: Colors.white, size: 30),
               onPressed: () => _showFeedbackSheet(context),
