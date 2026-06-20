@@ -35,6 +35,7 @@ class RentPage extends ConsumerWidget {
       backgroundColor: Colors.transparent,
       appBar: const GlassAppBar(
         title: 'Rent & Payments',
+        subtitle: 'Monthly dues & payment history',
       ),
       body: CustomScrollView(
         slivers: [

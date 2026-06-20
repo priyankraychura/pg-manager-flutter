@@ -27,7 +27,10 @@ class WifiPage extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: const GlassAppBar(title: 'WiFi Info'),
+      appBar: const GlassAppBar(
+        title: 'WiFi Info',
+        subtitle: 'Network credentials & connection details',
+      ),
       body: GradientBackground(
         child: wifiAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),

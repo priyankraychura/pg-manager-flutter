@@ -71,7 +71,10 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: const GlassAppBar(title: 'Leave Notice'),
+      appBar: const GlassAppBar(
+        title: 'Leave Notice',
+        subtitle: 'Submit notice to vacate',
+      ),
       body: GradientBackground(
         child: noticeAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),

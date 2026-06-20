@@ -11,6 +11,7 @@ import '../../features/settings/presentation/providers/settings_provider.dart';
 /// Glassmorphic app bar that floats over the content with blur effect.
 class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
+  final String? subtitle;
   final List<Widget>? actions;
   final Widget? leading;
   final bool showBackButton;
@@ -20,6 +21,7 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const GlassAppBar({
     super.key,
     required this.title,
+    this.subtitle,
     this.actions,
     this.leading,
     this.showBackButton = true,
@@ -28,7 +30,8 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(AppSpacing.appBarHeight);
+  Size get preferredSize => Size.fromHeight(
+      AppSpacing.appBarHeight + (subtitle != null ? 14.0 : 0.0));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,6 +89,13 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
                                 : Colors.black.withValues(alpha: 0.08),
                             width: 1.0,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.04),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: Icon(
                           Icons.chevron_left_rounded,
@@ -112,14 +122,33 @@ class GlassAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       child: AppBar(
-        title: Text(
-          title,
-          style: AppTextStyles.h2.copyWith(
-            fontWeight: FontWeight.w700,
-            color: isDark
-                ? AppColors.darkTextPrimary
-                : AppColors.lightTextPrimary,
-          ),
+        title: Column(
+          crossAxisAlignment:
+              centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.h2.copyWith(
+                fontWeight: FontWeight.w700,
+                color: isDark
+                    ? AppColors.darkTextPrimary
+                    : AppColors.lightTextPrimary,
+              ),
+            ),
+            if (subtitle != null) ...[
+              const SizedBox(height: 2),
+              Text(
+                subtitle!,
+                style: AppTextStyles.caption.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                ),
+              ),
+            ],
+          ],
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,

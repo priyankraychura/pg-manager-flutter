@@ -40,6 +40,7 @@ class ComplaintsPage extends ConsumerWidget {
     return Scaffold(
       appBar: GlassAppBar(
         title: 'Complaints',
+        subtitle: 'Raise & track maintenance issues',
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle_outline),

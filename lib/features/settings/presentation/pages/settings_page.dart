@@ -19,7 +19,10 @@ class SettingsPage extends ConsumerWidget {
     final isDarkMode = ref.watch(themeProvider);
 
     return Scaffold(
-      appBar: const GlassAppBar(title: 'Settings'),
+      appBar: const GlassAppBar(
+        title: 'Settings',
+        subtitle: 'Theme, notifications, & performance',
+      ),
       body: GradientBackground(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.screenPadding),

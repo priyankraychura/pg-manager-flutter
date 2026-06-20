@@ -35,7 +35,10 @@ class NoticesPage extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: const GlassAppBar(title: 'Notices'),
+      appBar: const GlassAppBar(
+        title: 'Notices',
+        subtitle: 'Important updates & announcements',
+      ),
       body: GradientBackground(
         child: noticesAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),

@@ -35,32 +35,35 @@ class _MenuPageState extends ConsumerState<MenuPage> {
     final menuAsync = ref.watch(menuProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: const GlassAppBar(
-        title: 'Meal Menu',
+    return menuAsync.when(
+      loading: () => const Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: GlassAppBar(
+          title: 'Meal Menu',
+          subtitle: 'Loading Menu...',
+        ),
+        body: Center(child: CircularProgressIndicator()),
       ),
-      body: menuAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
-        data: (meals) {
-          final currentMeal = meals[_selectedDay];
-          final currentWeek = _selectedDay < 7 ? 1 : 2;
+      error: (e, _) => Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: const GlassAppBar(
+          title: 'Meal Menu',
+          subtitle: 'Error loading menu',
+        ),
+        body: Center(child: Text('Error: $e')),
+      ),
+      data: (meals) {
+        final currentMeal = meals[_selectedDay];
+        final currentWeek = _selectedDay < 7 ? 1 : 2;
 
-          return CustomScrollView(
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: GlassAppBar(
+            title: 'Meal Menu',
+            subtitle: '2-Week Rotating Menu • Week $currentWeek',
+          ),
+          body: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(AppSpacing.screenPadding, AppSpacing.lg, AppSpacing.screenPadding, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('2-Week Rotating Menu • Week $currentWeek', style: AppTextStyles.body.copyWith(color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary)),
-                    ],
-                  ),
-                ),
-              ),
-
               // Day Selector
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -121,9 +124,9 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

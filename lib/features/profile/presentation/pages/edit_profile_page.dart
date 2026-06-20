@@ -92,6 +92,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     return Scaffold(
       appBar: GlassAppBar(
         title: 'Edit Profile',
+        subtitle: 'Update your personal & emergency details',
         onBackPressed: () => context.pop(),
       ),
       body: GradientBackground(

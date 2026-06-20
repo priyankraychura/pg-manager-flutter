@@ -27,7 +27,10 @@ class RoomDetailsPage extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: const GlassAppBar(title: 'Room Details'),
+      appBar: const GlassAppBar(
+        title: 'Room Details',
+        subtitle: 'View room info & roommates',
+      ),
       body: GradientBackground(
         child: roomAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
