@@ -244,7 +244,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       child: Text(
                         'Sign In',
                         style: AppTextStyles.body.copyWith(
-                          color: AppColors.primaryPurple,
+                          color: AppColors.primaryOrange,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

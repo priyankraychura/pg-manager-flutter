@@ -84,8 +84,8 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
                 children: [
                   Container(
                     width: 80, height: 80,
-                    decoration: BoxDecoration(color: AppColors.accentPink.withValues(alpha: 0.12), shape: BoxShape.circle),
-                    child: const Icon(Icons.exit_to_app_rounded, size: 40, color: AppColors.accentPink),
+                    decoration: BoxDecoration(color: AppColors.accentTeal.withValues(alpha: 0.12), shape: BoxShape.circle),
+                    child: const Icon(Icons.exit_to_app_rounded, size: 40, color: AppColors.accentTeal),
                   ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
 
                   const SizedBox(height: AppSpacing.xxl),
@@ -126,7 +126,7 @@ class _LeaveNoticePageState extends ConsumerState<LeaveNoticePage> {
                         GlassTextField(controller: _reasonController, label: 'Reason', hint: 'Why are you leaving?', maxLines: 3),
 
                         const SizedBox(height: AppSpacing.xxl),
-                        GlassButton(label: 'Submit Notice', isLoading: _isSubmitting, color: AppColors.accentPink, onPressed: _submit),
+                        GlassButton(label: 'Submit Notice', isLoading: _isSubmitting, color: AppColors.accentTeal, onPressed: _submit),
                       ],
                     ),
                   ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.05, end: 0),

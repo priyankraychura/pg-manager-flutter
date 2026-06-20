@@ -35,7 +35,7 @@ class ProfilePage extends ConsumerWidget {
               decoration: BoxDecoration(
                 gradient: AppColors.primaryGradient,
                 shape: BoxShape.circle,
-                boxShadow: [BoxShadow(color: AppColors.primaryPurple.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 8))],
+                boxShadow: [BoxShadow(color: AppColors.primaryOrange.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 8))],
               ),
               child: Center(
                 child: Text(user.name.initials, style: AppTextStyles.display.copyWith(color: Colors.white, fontSize: 36)),
@@ -77,7 +77,7 @@ class ProfilePage extends ConsumerWidget {
               icon: Icons.edit_outlined,
               title: 'Edit Profile',
               subtitle: 'Update personal & emergency details',
-              iconColor: AppColors.primaryPurple,
+              iconColor: AppColors.primaryOrange,
               onTap: () => context.push('/edit-profile'),
               trailing: const Icon(Icons.chevron_right, size: 20),
             ),
@@ -85,7 +85,7 @@ class ProfilePage extends ConsumerWidget {
               icon: Icons.bed_outlined,
               title: 'Room Details',
               subtitle: 'View room info & roommates',
-              iconColor: AppColors.secondaryCyan,
+              iconColor: AppColors.secondarySlate,
               onTap: () => context.push('/room'),
               trailing: const Icon(Icons.chevron_right, size: 20),
             ),
@@ -93,7 +93,7 @@ class ProfilePage extends ConsumerWidget {
               icon: Icons.logout_outlined,
               title: 'Leave Notice',
               subtitle: 'Submit notice to vacate',
-              iconColor: AppColors.accentPink,
+              iconColor: AppColors.accentTeal,
               onTap: () => context.push('/leave-notice'),
               trailing: const Icon(Icons.chevron_right, size: 20),
             ),
@@ -125,7 +125,7 @@ class _InfoRow extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
-        Icon(icon, size: 20, color: AppColors.primaryPurple.withValues(alpha: 0.7)),
+        Icon(icon, size: 20, color: AppColors.primaryOrange.withValues(alpha: 0.7)),
         const SizedBox(width: AppSpacing.md),
         Expanded(
           child: Column(

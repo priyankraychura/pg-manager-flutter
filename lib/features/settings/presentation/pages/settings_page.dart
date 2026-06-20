@@ -32,12 +32,12 @@ class SettingsPage extends ConsumerWidget {
                 animate: false,
                 child: Row(
                   children: [
-                    Icon(Icons.dark_mode_outlined, color: AppColors.primaryPurple),
+                    Icon(Icons.dark_mode_outlined, color: AppColors.primaryOrange),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(child: Text('Dark Mode', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500))),
                     Switch.adaptive(
                       value: isDarkMode,
-                      activeThumbColor: AppColors.primaryPurple,
+                      activeThumbColor: AppColors.primaryOrange,
                       onChanged: (_) => ref.read(themeProvider.notifier).toggle(),
                     ),
                   ],
@@ -68,7 +68,7 @@ class SettingsPage extends ConsumerWidget {
                 icon: Icons.info_outline,
                 title: 'About',
                 subtitle: 'PG Manager v1.0.0',
-                iconColor: AppColors.secondaryCyan,
+                iconColor: AppColors.secondarySlate,
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 animate: false,
               ),

@@ -199,7 +199,7 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primaryPurple.withValues(alpha: 0.3),
+                        color: AppColors.primaryOrange.withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 8),
                       ),
@@ -261,7 +261,7 @@ class _OtpVerificationPageState extends ConsumerState<OtpVerificationPage> {
                               child: Text(
                                 'Resend OTP',
                                 style: AppTextStyles.body.copyWith(
-                                  color: AppColors.primaryPurple,
+                                  color: AppColors.primaryOrange,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

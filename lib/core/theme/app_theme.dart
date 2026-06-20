@@ -13,14 +13,14 @@ class AppTheme {
   static ThemeData get light => ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    primaryColor: AppColors.primaryPurple,
+    primaryColor: AppColors.primaryOrange,
     scaffoldBackgroundColor: Colors.transparent,
     fontFamily: GoogleFonts.outfit().fontFamily,
     colorScheme: const ColorScheme.light(
-      primary: AppColors.primaryPurple,
-      primaryContainer: AppColors.primaryPurpleLight,
-      secondary: AppColors.secondaryCyan,
-      secondaryContainer: AppColors.secondaryCyanDark,
+      primary: AppColors.primaryOrange,
+      primaryContainer: AppColors.primaryOrangeLight,
+      secondary: AppColors.secondarySlate,
+      secondaryContainer: AppColors.secondarySlateDark,
       error: AppColors.error,
       surface: AppColors.lightSurface,
       onPrimary: Colors.white,
@@ -43,7 +43,7 @@ class AppTheme {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      selectedItemColor: AppColors.primaryPurple,
+      selectedItemColor: AppColors.primaryOrange,
       unselectedItemColor: AppColors.lightTextTertiary,
       type: BottomNavigationBarType.fixed,
     ),
@@ -71,7 +71,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         borderSide: const BorderSide(
-          color: AppColors.primaryPurple, // Executive Indigo
+          color: AppColors.primaryOrange, // Professional Orange
           width: 1.5,
         ),
       ),
@@ -89,7 +89,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryPurple,
+        backgroundColor: AppColors.primaryOrange,
         foregroundColor: Colors.white,
         minimumSize: const Size(double.infinity, AppSpacing.buttonHeight),
         shape: RoundedRectangleBorder(
@@ -105,7 +105,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: AppColors.primaryPurple,
+        foregroundColor: AppColors.primaryOrange,
         textStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
@@ -129,14 +129,14 @@ class AppTheme {
   static ThemeData get dark => ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    primaryColor: AppColors.primaryPurple,
+    primaryColor: AppColors.primaryOrange,
     scaffoldBackgroundColor: Colors.transparent,
     fontFamily: GoogleFonts.outfit().fontFamily,
     colorScheme: const ColorScheme.dark(
-      primary: AppColors.primaryPurple,
-      primaryContainer: AppColors.primaryPurpleDark,
-      secondary: AppColors.secondaryCyan,
-      secondaryContainer: AppColors.secondaryCyanDark,
+      primary: AppColors.primaryOrange,
+      primaryContainer: AppColors.primaryOrangeDark,
+      secondary: AppColors.secondarySlate,
+      secondaryContainer: AppColors.secondarySlateDark,
       error: AppColors.error,
       surface: AppColors.darkSurface,
       onPrimary: Colors.white,
@@ -159,7 +159,7 @@ class AppTheme {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      selectedItemColor: AppColors.primaryPurpleLight,
+      selectedItemColor: AppColors.primaryOrangeLight,
       unselectedItemColor: AppColors.darkTextTertiary,
       type: BottomNavigationBarType.fixed,
     ),
@@ -187,7 +187,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         borderSide: const BorderSide(
-          color: AppColors.primaryPurpleLight,
+          color: AppColors.primaryOrangeLight,
           width: 1.5,
         ),
       ),
@@ -205,7 +205,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryPurple,
+        backgroundColor: AppColors.primaryOrange,
         foregroundColor: Colors.white,
         minimumSize: const Size(double.infinity, AppSpacing.buttonHeight),
         shape: RoundedRectangleBorder(
@@ -221,7 +221,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: AppColors.primaryPurpleLight,
+        foregroundColor: AppColors.primaryOrangeLight,
         textStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,

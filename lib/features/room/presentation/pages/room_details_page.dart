@@ -45,10 +45,10 @@ class RoomDetailsPage extends ConsumerWidget {
                       Container(
                         width: 70, height: 70,
                         decoration: BoxDecoration(
-                          color: AppColors.primaryPurple.withValues(alpha: 0.12),
+                          color: AppColors.primaryOrange.withValues(alpha: 0.12),
                           shape: BoxShape.circle,
                         ),
-                        child: Center(child: Text(room.roomNumber, style: AppTextStyles.h2.copyWith(color: AppColors.primaryPurple))),
+                        child: Center(child: Text(room.roomNumber, style: AppTextStyles.h2.copyWith(color: AppColors.primaryOrange))),
                       ),
                       const SizedBox(height: AppSpacing.lg),
                       Text('Room ${room.roomNumber}', style: AppTextStyles.h1),
@@ -69,9 +69,9 @@ class RoomDetailsPage extends ConsumerWidget {
                   children: room.amenities.map((a) => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryPurple.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusRound),
-                      border: Border.all(color: AppColors.primaryPurple.withValues(alpha: 0.2)),
+                      color: AppColors.primaryOrange.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.primaryOrange.withValues(alpha: 0.2)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -112,7 +112,7 @@ class RoomDetailsPage extends ConsumerWidget {
                           ),
                         ),
                         if (r.phone != null)
-                          Icon(Icons.phone_outlined, size: 20, color: AppColors.primaryPurple),
+                          Icon(Icons.phone_outlined, size: 20, color: AppColors.primaryOrange),
                       ],
                     ),
                   )),

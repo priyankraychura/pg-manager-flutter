@@ -78,9 +78,9 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                           width: 52,
                           margin: const EdgeInsets.only(right: AppSpacing.sm),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryPurple : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.5)),
+                            color: isSelected ? AppColors.primaryOrange : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.5)),
                             borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                            border: isToday && !isSelected ? Border.all(color: AppColors.primaryPurple, width: 1.5) : null,
+                            border: isToday && !isSelected ? Border.all(color: AppColors.primaryOrange, width: 1.5) : null,
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

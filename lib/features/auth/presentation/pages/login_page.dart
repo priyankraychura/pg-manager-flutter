@@ -203,7 +203,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: Text(
                         'Sign Up',
                         style: AppTextStyles.body.copyWith(
-                          color: AppColors.primaryPurple,
+                          color: AppColors.primaryOrange,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -230,7 +230,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             borderRadius: BorderRadius.circular(24), // Squircle-like smooth radius
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryPurple.withValues(alpha: 0.25),
+                color: AppColors.primaryOrange.withValues(alpha: 0.25),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),

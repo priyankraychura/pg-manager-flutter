@@ -101,7 +101,7 @@ class _GlassButtonState extends State<GlassButton>
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor = widget.color ?? AppColors.primaryPurple;
+    final buttonColor = widget.color ?? AppColors.primaryOrange;
 
     return GestureDetector(
       onTapDown: _onTapDown,

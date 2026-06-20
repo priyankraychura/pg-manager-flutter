@@ -53,7 +53,7 @@ class DashboardPage extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hello, ${authState.user?.name.split(' ').first ?? data.tenantName} 👋',
+                              'Hello, ${authState.user?.name.split(' ').first ?? data.tenantName}',
                               style: AppTextStyles.h1.copyWith(
                                 color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
                               ),
@@ -259,13 +259,13 @@ class _QuickActionsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      _QuickAction(Icons.payment_outlined, 'Rent', AppColors.primaryPurple, '/rent'),
-      _QuickAction(Icons.wifi_outlined, 'WiFi', AppColors.secondaryCyan, '/wifi'),
+      _QuickAction(Icons.payment_outlined, 'Rent', AppColors.primaryOrange, '/rent'),
+      _QuickAction(Icons.wifi_outlined, 'WiFi', AppColors.info, '/wifi'),
       _QuickAction(Icons.restaurant_menu_outlined, 'Menu', AppColors.warning, '/menu'),
       _QuickAction(Icons.bed_outlined, 'Room', AppColors.success, '/room'),
       _QuickAction(Icons.report_problem_outlined, 'Complaints', AppColors.error, '/complaints', badge: activeComplaints > 0 ? '$activeComplaints' : null),
       _QuickAction(Icons.campaign_outlined, 'Notices', AppColors.info, '/notices'),
-      _QuickAction(Icons.logout_outlined, 'Leave', AppColors.accentPink, '/leave-notice'),
+      _QuickAction(Icons.logout_outlined, 'Leave', AppColors.accentTeal, '/leave-notice'),
       _QuickAction(Icons.settings_outlined, 'Settings', AppColors.lightTextTertiary, '/settings'),
     ];
 

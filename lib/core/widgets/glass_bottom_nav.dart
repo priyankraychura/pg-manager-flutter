@@ -21,42 +21,56 @@ class GlassBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          height: AppSpacing.bottomNavHeight +
-              MediaQuery.of(context).padding.bottom,
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).padding.bottom,
-          ),
-          decoration: BoxDecoration(
-            color: isDark
-                ? AppColors.darkGlassFill
-                : AppColors.lightGlassFill,
-            border: Border(
-              top: BorderSide(
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(18, 0, 18, 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+            child: Container(
+              height: 68,
+              decoration: BoxDecoration(
                 color: isDark
-                    ? AppColors.darkGlassBorder
-                    : AppColors.lightGlassBorder,
-                width: 0.5,
+                    ? AppColors.darkGlassFill.withValues(alpha: 0.12)
+                    : AppColors.lightGlassFill.withValues(alpha: 0.65),
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: isDark
+                      ? AppColors.darkGlassBorder.withValues(alpha: 0.15)
+                      : AppColors.lightGlassBorder.withValues(alpha: 0.7),
+                  width: 1.0,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: items.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final item = entry.value;
+                  final isSelected = index == currentIndex;
+
+                  return _NavItem(
+                    item: item,
+                    isSelected: isSelected,
+                    isDark: isDark,
+                    onTap: () => onTap(index),
+                  );
+                }).toList(),
               ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: items.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              final isSelected = index == currentIndex;
-
-              return _NavItem(
-                item: item,
-                isSelected: isSelected,
-                isDark: isDark,
-                onTap: () => onTap(index),
-              );
-            }).toList(),
           ),
         ),
       ),
@@ -79,7 +93,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = AppColors.primaryPurple;
+    final activeColor = AppColors.primaryOrange;
     final inactiveColor = isDark
         ? AppColors.darkTextTertiary
         : AppColors.lightTextTertiary;

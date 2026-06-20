@@ -83,8 +83,8 @@ class ComplaintsPage extends ConsumerWidget {
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(color: AppColors.primaryPurple.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
-                            child: Text(c.category.name, style: AppTextStyles.caption.copyWith(color: AppColors.primaryPurple)),
+                            decoration: BoxDecoration(color: AppColors.primaryOrange.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+                            child: Text(c.category.name, style: AppTextStyles.caption.copyWith(color: AppColors.primaryOrange)),
                           ),
                           const Spacer(),
                           Text(Formatters.relative(c.createdAt), style: AppTextStyles.caption.copyWith(color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary)),
@@ -153,9 +153,9 @@ class ComplaintsPage extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: selectedCategory == cat ? AppColors.primaryPurple : Colors.transparent,
+                        color: selectedCategory == cat ? AppColors.primaryOrange : Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: selectedCategory == cat ? AppColors.primaryPurple : Colors.grey.shade400),
+                        border: Border.all(color: selectedCategory == cat ? AppColors.primaryOrange : Colors.grey.shade400),
                       ),
                       child: Text(cat.name, style: TextStyle(fontSize: 13, color: selectedCategory == cat ? Colors.white : null)),
                     ),

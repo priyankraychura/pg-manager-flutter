@@ -7,14 +7,14 @@ class AppColors {
   AppColors._();
 
   // ─── Primary Palette ───────────────────────────────────────
-  static const Color primaryPurple = Color(0xFF4F46E5); // Executive Indigo
-  static const Color primaryPurpleLight = Color(0xFF818CF8); // Soft Indigo Accent
-  static const Color primaryPurpleDark = Color(0xFF3730A3); // Deep Sapphire Indigo
+  static const Color primaryOrange = Color(0xFFEA580C); // Professional Solid Orange
+  static const Color primaryOrangeLight = Color(0xFFFB923C); // Soft Orange Accent
+  static const Color primaryOrangeDark = Color(0xFFC2410C); // Deep Corporate Orange
 
   // ─── Secondary / Accent ────────────────────────────────────
-  static const Color secondaryCyan = Color(0xFF0EA5E9); // Modern Sky Blue
-  static const Color secondaryCyanDark = Color(0xFF0284C7); // Rich Ocean Blue
-  static const Color accentPink = Color(0xFF10B981); // Emerald Green Accent
+  static const Color secondarySlate = Color(0xFF475569); // Professional Slate Gray
+  static const Color secondarySlateDark = Color(0xFF1E293B); // Dark Slate Gray
+  static const Color accentTeal = Color(0xFF0F766E); // Elegant Teal Accent
 
   // ─── Semantic Colors ───────────────────────────────────────
   static const Color success = Color(0xFF10B981); // Mint Green
@@ -48,7 +48,7 @@ class AppColors {
 
   // ─── Gradient Presets ──────────────────────────────────────
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [primaryPurple, secondaryCyan],
+    colors: [primaryOrange, secondarySlate],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -66,7 +66,7 @@ class AppColors {
   );
 
   static const LinearGradient accentGradient = LinearGradient(
-    colors: [primaryPurple, accentPink],
+    colors: [primaryOrange, accentTeal],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

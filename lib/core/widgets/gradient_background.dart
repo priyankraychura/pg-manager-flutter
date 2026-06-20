@@ -94,30 +94,28 @@ class _OrbsPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
+    // We use a high-radius blur filter on the paint to create smooth ambient radial lights
+    final paint = Paint()
+      ..style = PaintingStyle.fill
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, isDark ? 140 : 100);
 
-    // Orb 1 - Large purple
-    final orb1X = size.width * 0.2 + math.sin(progress * 2 * math.pi) * 30;
-    final orb1Y = size.height * 0.15 + math.cos(progress * 2 * math.pi) * 20;
-    paint.color = AppColors.primaryPurple.withValues(alpha: isDark ? 0.08 : 0.06);
-    canvas.drawCircle(Offset(orb1X, orb1Y), 120, paint);
+    // Glow 1 - Professional Orange (Top Right Area)
+    final glow1X = size.width * 0.8 + math.sin(progress * 2 * math.pi) * 30;
+    final glow1Y = size.height * 0.15 + math.cos(progress * 2 * math.pi) * 20;
+    paint.color = AppColors.primaryOrange.withValues(alpha: isDark ? 0.09 : 0.07);
+    canvas.drawCircle(Offset(glow1X, glow1Y), isDark ? 180 : 140, paint);
 
-    // Orb 2 - Medium cyan
-    final orb2X =
-        size.width * 0.8 + math.cos(progress * 2 * math.pi + 1) * 25;
-    final orb2Y =
-        size.height * 0.35 + math.sin(progress * 2 * math.pi + 1) * 30;
-    paint.color =
-        AppColors.secondaryCyan.withValues(alpha: isDark ? 0.06 : 0.05);
-    canvas.drawCircle(Offset(orb2X, orb2Y), 90, paint);
+    // Glow 2 - Slate/Neutral (Middle Left Area)
+    final glow2X = size.width * 0.15 + math.cos(progress * 2 * math.pi + 1.5) * 25;
+    final glow2Y = size.height * 0.5 + math.sin(progress * 2 * math.pi + 1.5) * 30;
+    paint.color = AppColors.secondarySlate.withValues(alpha: isDark ? 0.08 : 0.06);
+    canvas.drawCircle(Offset(glow2X, glow2Y), isDark ? 200 : 150, paint);
 
-    // Orb 3 - Small pink
-    final orb3X =
-        size.width * 0.5 + math.sin(progress * 2 * math.pi + 2) * 20;
-    final orb3Y =
-        size.height * 0.7 + math.cos(progress * 2 * math.pi + 2) * 25;
-    paint.color = AppColors.accentPink.withValues(alpha: isDark ? 0.05 : 0.04);
-    canvas.drawCircle(Offset(orb3X, orb3Y), 80, paint);
+    // Glow 3 - Teal Accent (Bottom Right Area)
+    final glow3X = size.width * 0.75 + math.sin(progress * 2 * math.pi + 3) * 20;
+    final glow3Y = size.height * 0.8 + math.cos(progress * 2 * math.pi + 3) * 25;
+    paint.color = AppColors.accentTeal.withValues(alpha: isDark ? 0.06 : 0.04);
+    canvas.drawCircle(Offset(glow3X, glow3Y), isDark ? 160 : 120, paint);
   }
 
   @override

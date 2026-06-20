@@ -14,6 +14,7 @@ class NavigationShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: GradientBackground(
         child: navigationShell,
       ),
